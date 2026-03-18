@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>150cm 減脂智算機 v4.0</title>
+    <style>
+        :root { --primary: #6c5ce7; --accent: #a29bfe; --bg: #f0f2f5; --google: #1976d2; }
+        body { font-family: -apple-system, system-ui, BlinkMacSystemFont; background: var(--bg); padding: 10px; display: flex; justify-content: center; }
+        .container { background: white; width: 100%; max-width: 450px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 20px; box-sizing: border-box; }
+        h1 { text-align: center; color: var(--primary); font-size: 1.4rem; margin-bottom: 20px; }
+        .card { background: #fff; border: 1px solid #eee; border-radius: 16px; padding: 15px; margin-bottom: 15px; }
+        h3 { margin: 0 0 10px 0; font-size: 1rem; color: #444; border-left: 4px solid var(--primary); padding-left: 8px; }
+        select, input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box; font-size: 1rem; }
+        .fist-calc { display: flex; gap: 5px; align-items: center; margin-bottom: 10px; font-size: 0.9rem; }
+        .fist-calc input { width: 70px; margin-bottom: 0; text-align: center; }
+        .stats-box { background: var(--primary); color: white; padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 20px; }
+        .kcal-display { font-size: 2.5rem; font-weight: 800; }
+        .mission-tag { background: #fff3cd; padding: 10px; border-radius: 10px; border-left: 5px solid #ffc107; margin-bottom: 15px; font-size: 0.9rem; }
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        button { padding: 12px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 1rem; }
+        .btn-dice { background: #00b894; color: white; }
+        .btn-reset { background: #fab1a0; color: white; }
+        .btn-calendar { background: var(--google); color: white; width: 100%; margin-top: 5px; }
+        .ng-hint { font-size: 0.75rem; color: #999; text-align: center; margin-top: 15px; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="stats-box">
+        <div style="font-size: 0.9rem; opacity: 0.9;">今日已攝取熱量</div>
+        <div class="kcal-display" id="totalDisplay">0</div>
+        <div id="statusText">目標：1100 - 1200 kcal</div>
+    </div>
+
+    <div class="mission-tag">
+        🏃 <strong>今日運動：</strong> <span id="exerciseTask">尚未抽出</span>
+    </div>
+
+    <div class="card">
+        <h3>🌅 早餐 (目標 300k)</h3>
+        <select id="b_sel" onchange="sync()">
+            <option value="0">--- 選擇固定餐點 ---</option>
+            <option value="180">能量果凍 (180k)</option>
+            <option value="210">鮪魚飯糰 (210k)</option>
+            <option value="155">茶葉蛋2顆 + 黑咖啡 (155k)</option>
+            <option value="280">起司蛋吐司-去邊 (280k)</option>
+            <option value="140">無糖優格 + 堅果 (140k)</option>
+            <option value="220">超商蛋沙拉三明治 (220k)</option>
+            <option value="160">水果杯 + 蛋 (160k)</option>
+            <option value="250">無糖拿鐵 + 小地瓜 (250k)</option>
+            <option value="310">蛋白丁 + 飯糰 (310k)</option>
+            <option value="120">純黑咖啡 + 2片蘇打餅 (120k)</option>
+        </select>
+        <input type="number" id="b_custom" placeholder="或自行輸入熱量" oninput="sync()">
+    </div>
+
+    <div class="card">
+        <h3>🍱 份量估計 (以拳頭為單位)</h3>
+        <div class="fist-calc">🥩 去骨肉: <input type="number" id="f_meat" value="0" step="0.5" oninput="sync()"> 拳 (1拳≈200k)</div>
+        <div class="fist-calc">🥬 綠色菜: <input type="number" id="f_veg" value="0" step="0.5" oninput="sync()"> 拳 (1拳≈35k)</div>
+        <div class="fist-calc">🍚 澱粉類: <input type="number" id="f_carbs" value="0" step="0.5" oninput="sync()"> 拳 (1拳≈280k)</div>
+    </div>
+
+    <div class="card">
+        <h3>🌙 晚餐/其他固定項</h3>
+        <select id="d_sel" onchange="sync()">
+            <option value="0">--- 快速選擇 ---</option>
+            <option value="150">舒肥雞胸肉 (150k)</option>
+            <option value="350">去骨雞腿排沙拉 (350k)</option>
+            <option value="420">超商蕎麥涼麵 (420k)</option>
+            <option value="250">皮蛋豆腐 (250k)</option>
+            <option value="400">滷味：蛋白+青菜+麵 (400k)</option>
+            <option value="380">火鍋：純瘦肉+大量菜 (380k)</option>
+            <option value="320">水果拼盤 + 豆干 (320k)</option>
+            <option value="450">自助餐標配 (450k)</option>
+            <option value="200">燙青菜2份 + 滷蛋 (200k)</option>
+            <option value="300">超商關東煮-選肉菜 (300k)</option>
+        </select>
+        <input type="number" id="d_custom" placeholder="其他點心/飲品熱量" oninput="sync()">
+    </div>
+
+    <div class="btn-group">
+        <button class="btn-dice" onclick="rollDice()">🎲 隨機配餐</button>
+        <button class="btn-reset" onclick="resetAll()">🧹 清除重算</button>
+    </div>
+
+    <div class="card" style="background: #e3f2fd; border: none; text-align: center;">
+        <h3 style="border-left-color: var(--google); margin-bottom: 5px;">📅 雲端紀錄儀式</h3>
+        <button class="btn-calendar" onclick="saveToCalendar()">💾 儲存成果到 Google 日曆</button>
+    </div>
+
+    <div class="ng-hint">
+        🚫 嚴禁：胡蘿蔔、洋蔥、小黃瓜、番茄、苦瓜、有骨肉<br>
+        22歲 | 150cm | 久坐族 | 減脂期
+    </div>
+</div>
+
+<script>
+    const exercises = ["開合跳 3組", "跳繩 500下", "快走 30分鐘", "靠牆深蹲 1分鐘x3", "核心訓練 10分鐘"];
+
+    function sync() {
+        const b_sel = parseInt(document.getElementById('b_sel').value) || 0;
+        const b_cus = parseInt(document.getElementById('b_custom').value) || 0;
+        const f_meat = (parseFloat(document.getElementById('f_meat').value) || 0) * 200;
+        const f_veg = (parseFloat(document.getElementById('f_veg').value) || 0) * 35;
+        const f_carbs = (parseFloat(document.getElementById('f_carbs').value) || 0) * 280;
+        const d_sel = parseInt(document.getElementById('d_sel').value) || 0;
+        const d_cus = parseInt(document.getElementById('d_custom').value) || 0;
+
+        const total = Math.round(b_sel + b_cus + f_meat + f_veg + f_carbs + d_sel + d_cus);
+        document.getElementById('totalDisplay').innerText = total;
+        
+        const status = document.getElementById('statusText');
+        if(total > 1250) { status.innerText = "🚨 攝取過多！"; status.style.color = "#ff7675"; }
+        else if (total >= 1000) { status.innerText = "🎯 完美控制！"; status.style.color = "#55efc4"; }
+        else { status.innerText = "🥣 熱量略低，加油！"; status.style.color = "#ffeaa7"; }
+    }
+
+    function rollDice() {
+        const bSel = document.getElementById('b_sel');
+        bSel.selectedIndex = Math.floor(Math.random() * (bSel.options.length - 1)) + 1;
+        const dSel = document.getElementById('d_sel');
+        dSel.selectedIndex = Math.floor(Math.random() * (dSel.options.length - 1)) + 1;
+        document.getElementById('exerciseTask').innerText = exercises[Math.floor(Math.random()*exercises.length)];
+        sync();
+    }
+
+    function resetAll() {
+        document.querySelectorAll('input').forEach(i => i.value = i.type === 'number' ? 0 : '');
+        document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+        document.getElementById('exerciseTask').innerText = "尚未抽出";
+        sync();
+    }
+
+    function saveToCalendar() {
+        const total = document.getElementById('totalDisplay').innerText;
+        const exercise = document.getElementById('exerciseTask').innerText;
+        const b = document.getElementById('b_sel').options[document.getElementById('b_sel').selectedIndex].text;
+        const d = document.getElementById('d_sel').options[document.getElementById('d_sel').selectedIndex].text;
+        
+        const title = `減脂紀錄：${total} kcal`;
+        const details = `早餐：${b}\n晚餐：${d}\n運動：${exercise}\n【150cm戰鬥機紀錄】`;
+        
+        const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&details=${encodeURIComponent(details)}&add=`;
+        window.open(url, '_blank');
+    }
+
+    sync();
+</script>
+
+</body>
+</html>
