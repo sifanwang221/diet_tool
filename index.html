@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>150cm 減脂戰鬥機 v5.0</title>
+    <title>150cm 減脂戰鬥機 v6.0</title>
     <style>
         :root { --primary: #6c5ce7; --accent: #a29bfe; --bg: #f0f2f5; --water: #0984e3; --fast: #d63031; }
         body { font-family: -apple-system, system-ui, BlinkMacSystemFont; background: var(--bg); padding: 10px; display: flex; justify-content: center; }
@@ -12,30 +12,27 @@
         h1 { text-align: center; color: var(--primary); font-size: 1.4rem; margin-bottom: 15px; }
         h3 { margin: 0 0 10px 0; font-size: 1rem; color: #444; border-left: 4px solid var(--primary); padding-left: 8px; }
         
-        /* 斷食計時器 */
         .timer-box { background: var(--fast); color: white; padding: 15px; border-radius: 15px; text-align: center; margin-bottom: 15px; }
         .timer-val { font-size: 1.8rem; font-weight: bold; font-variant-numeric: tabular-nums; }
-
-        /* 飲水追蹤 */
+        
         .water-box { background: #e1f5fe; border: 1px solid var(--water); padding: 15px; border-radius: 15px; text-align: center; margin-bottom: 15px; }
         .water-grid { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
         .water-drop { font-size: 1.5rem; cursor: pointer; filter: grayscale(1); transition: 0.3s; }
         .water-drop.active { filter: grayscale(0); transform: scale(1.2); }
 
-        /* 熱量統計 */
         .stats-box { background: var(--primary); color: white; padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 15px; }
         .kcal-display { font-size: 2.5rem; font-weight: 800; }
 
-        select, input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box; }
+        select, input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box; font-size: 1rem; }
         .fist-calc { display: flex; gap: 5px; align-items: center; margin-bottom: 10px; font-size: 0.9rem; }
         .fist-calc input { width: 70px; margin-bottom: 0; text-align: center; }
         
         .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         button { padding: 12px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 1rem; }
-        .btn-main { background: #1976d2; color: white; width: 100%; }
+        .btn-main { background: #1976d2; color: white; width: 100%; margin-top: 10px; }
         .btn-dice { background: #00b894; color: white; }
         .btn-reset { background: #fab1a0; color: white; }
-        .ng-hint { font-size: 0.7rem; color: #999; text-align: center; margin-top: 15px; }
+        .ng-hint { font-size: 0.7rem; color: #999; text-align: center; margin-top: 15px; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -44,9 +41,9 @@
     <h1>🥑 150cm 減脂儀表板</h1>
 
     <div class="timer-box">
-        <div style="font-size: 0.8rem; opacity: 0.9;">186 斷食倒數 (19:00 關食)</div>
+        <div style="font-size: 0.8rem; opacity: 0.9;">186 斷食倒數 (13:00 開食)</div>
         <div class="timer-val" id="timer">--:--:--</div>
-        <div id="fast-status" style="font-size: 0.8rem; margin-top: 5px;">目前處於：斷食期</div>
+        <div id="fast-status" style="font-size: 0.8rem; margin-top: 5px;">狀態更新中...</div>
     </div>
 
     <div class="water-box">
@@ -62,29 +59,60 @@
     </div>
 
     <div class="card">
-        <h3>🍱 份量估計 (150cm 女生專用)</h3>
+        <h3>🌅 第一餐建議 (12:00 - 13:00)</h3>
+        <select id="b_sel" onchange="sync()">
+            <option value="0">--- 點我選餐 (10種) ---</option>
+            <option value="180">能量果凍 (藍) - 180k</option>
+            <option value="155">茶葉蛋2顆 + 黑咖啡 - 155k</option>
+            <option value="210">鮪魚飯糰 (超商) - 210k</option>
+            <option value="280">起司蛋吐司(去邊) - 280k</option>
+            <option value="140">無糖優格 + 少量堅果 - 140k</option>
+            <option value="220">蛋沙拉三明治 - 220k</option>
+            <option value="160">芭樂/蘋果杯 + 1顆蛋 - 160k</option>
+            <option value="250">無糖拿鐵 + 小地瓜 - 250k</option>
+            <option value="310">石安牧場蛋白丁 + 飯糰 - 310k</option>
+            <option value="120">黑咖啡 + 2片蘇打餅 - 120k</option>
+        </select>
+    </div>
+
+    <div class="card">
+        <h3>🍱 主餐建議 (中/晚)</h3>
+        <select id="l_sel" onchange="sync()">
+            <option value="0">--- 點我選餐 (10種) ---</option>
+            <option value="150">舒肥雞胸肉 (原味) - 150k</option>
+            <option value="350">去骨雞腿排沙拉 - 350k</option>
+            <option value="420">蕎麥涼麵 (超商) - 420k</option>
+            <option value="250">皮蛋豆腐 (去肉燥) - 250k</option>
+            <option value="400">滷味：蛋白+青菜+科學麵 - 400k</option>
+            <option value="380">火鍋：純瘦肉+大量菜 (不喝湯) - 380k</option>
+            <option value="450">自助餐：1肉2菜半份飯 - 450k</option>
+            <option value="200">燙青菜2份 + 滷蛋 - 200k</option>
+            <option value="300">關東煮：白蘿蔔+豆腐+肉 - 300k</option>
+            <option value="320">水果拼盤(去籽) + 豆干 - 320k</option>
+        </select>
+    </div>
+
+    <div class="card">
+        <h3>🖐️ 拳頭份量/手動輸入</h3>
         <div class="fist-calc">🥩 去骨肉: <input type="number" id="f_meat" value="0" step="0.5" oninput="sync()"> 拳 (200k)</div>
         <div class="fist-calc">🥬 綠色菜: <input type="number" id="f_veg" value="0" step="0.5" oninput="sync()"> 拳 (35k)</div>
         <div class="fist-calc">🍚 澱粉類: <input type="number" id="f_carbs" value="0" step="0.5" oninput="sync()"> 拳 (280k)</div>
-        <select id="quick_sel" onchange="addQuick()">
-            <option value="0">--- 快速加入常用項 ---</option>
-            <option value="180">能量果凍 (180k)</option>
-            <option value="75">茶葉蛋 1 顆 (75k)</option>
-            <option value="150">超商雞胸肉 (150k)</option>
-        </select>
-        <input type="number" id="extra_kcal" placeholder="其他熱量輸入" oninput="sync()">
+        <input type="number" id="extra_kcal" placeholder="其他點心/熱量輸入" oninput="sync()">
     </div>
 
     <div class="btn-group">
-        <button class="btn-dice" onclick="rollExercise()">🎲 隨機運動</button>
-        <button class="btn-reset" onclick="resetAll()">🧹 重設</button>
+        <button class="btn-dice" onclick="rollExercise()">🎲 抽運動任務</button>
+        <button class="btn-reset" onclick="resetAll()">🧹 清除重算</button>
     </div>
     
-    <div id="exerciseTask" style="text-align:center; font-weight:bold; color:var(--primary); margin-bottom:15px;">尚未抽運動任務</div>
+    <div id="exerciseTask" style="text-align:center; font-weight:bold; color:var(--primary); margin-bottom:15px; font-size: 1rem;">點骰子看今天要做什麼</div>
 
     <button class="btn-main" onclick="saveToCalendar()">💾 儲存成果到 Google 日曆</button>
 
-    <div class="ng-hint">🚫 禁：胡蘿蔔、洋蔥、小黃瓜、番茄、苦瓜、有骨肉</div>
+    <div class="ng-hint">
+        🚫 絕對不碰：胡蘿蔔、洋蔥、小黃瓜、番茄、苦瓜、有骨肉<br>
+        22歲 | 150cm | 飲水目標 1900ml
+    </div>
 </div>
 
 <script>
@@ -103,66 +131,84 @@
         waterGrid.appendChild(drop);
     }
 
-    // 斷食計時器 (假設 19:00 吃最後一餐，明天 13:00 開食)
+    // 186 斷食計時器
     function updateTimer() {
         const now = new Date();
-        const target = new Date();
-        target.setHours(13, 0, 0); // 設定明天 13:00 開食
+        const startEating = new Date();
+        startEating.setHours(13, 0, 0, 0); // 下午 1 點開食
+        
+        const stopEating = new Date();
+        stopEating.setHours(19, 0, 0, 0);  // 晚上 7 點關食
 
-        if (now > target) target.setDate(target.getDate() + 1);
-        
-        const diff = target - now;
-        const h = Math.floor(diff / 3600000);
-        const m = Math.floor((diff % 3600000) / 60000);
-        const s = Math.floor((diff % 60000) / 1000);
-        
-        document.getElementById('timer').innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-        
-        const status = document.getElementById('fast-status');
-        const currentHr = now.getHours();
-        if(currentHr >= 13 && currentHr < 19) {
-            status.innerText = "目前處於：進食窗口 🟢";
-            document.querySelector('.timer-box').style.background = "#00b894";
+        const timerEl = document.getElementById('timer');
+        const statusEl = document.getElementById('fast-status');
+        const box = document.querySelector('.timer-box');
+
+        if (now >= startEating && now < stopEating) {
+            // 進食期間：倒數到關食
+            const diff = stopEating - now;
+            timerEl.innerText = formatDiff(diff);
+            statusEl.innerText = "目前處於：進食窗口 (加油吃夠！) 🟢";
+            box.style.background = "#00b894";
         } else {
-            status.innerText = "目前處於：斷食期 🔴";
-            document.querySelector('.timer-box').style.background = "#d63031";
+            // 斷食期間：倒數到明天開食
+            let target = startEating;
+            if (now >= stopEating) target.setDate(target.getDate() + 1);
+            const diff = target - now;
+            timerEl.innerText = formatDiff(diff);
+            statusEl.innerText = "目前處於：斷食期 (燃脂中...) 🔴";
+            box.style.background = "#d63031";
         }
+    }
+
+    function formatDiff(ms) {
+        const h = Math.floor(ms / 3600000).toString().padStart(2, '0');
+        const m = Math.floor((ms % 3600000) / 60000).toString().padStart(2, '0');
+        const s = Math.floor((ms % 60000) / 1000).toString().padStart(2, '0');
+        return `${h}:${m}:${s}`;
     }
     setInterval(updateTimer, 1000);
 
     function sync() {
+        const b = parseInt(document.getElementById('b_sel').value) || 0;
+        const l = parseInt(document.getElementById('l_sel').value) || 0;
         const meat = (parseFloat(document.getElementById('f_meat').value) || 0) * 200;
         const veg = (parseFloat(document.getElementById('f_veg').value) || 0) * 35;
         const carbs = (parseFloat(document.getElementById('f_carbs').value) || 0) * 280;
         const extra = parseInt(document.getElementById('extra_kcal').value) || 0;
-        const total = Math.round(meat + veg + carbs + extra);
+        
+        const total = Math.round(b + l + meat + veg + carbs + extra);
         document.getElementById('totalDisplay').innerText = total;
-    }
-
-    function addQuick() {
-        const val = parseInt(document.getElementById('quick_sel').value);
-        if(val > 0) {
-            const currentExtra = parseInt(document.getElementById('extra_kcal').value) || 0;
-            document.getElementById('extra_kcal').value = currentExtra + val;
-            sync();
-        }
+        
+        const fb = document.getElementById('statusText');
+        if(total > 1250) fb.innerText = "🚨 攝取稍微多了點喔！";
+        else if (total >= 1000) fb.innerText = "🎯 完美控制，維持住！";
+        else fb.innerText = "🥣 熱量略低，記得吃飽。";
     }
 
     function rollExercise() {
-        const ex = ["開合跳 3組", "跳繩 5分鐘", "核心訓練 10分鐘", "快走 30分鐘"];
-        document.getElementById('exerciseTask').innerText = "任務：" + ex[Math.floor(Math.random()*ex.length)];
+        const ex = [
+            "開合跳 3組 (每組30下)",
+            "跳繩 5分鐘 (慢速)",
+            "核心：棒式 30秒 x 3組",
+            "快走 30分鐘 (下班回家)",
+            "拉筋伸展 10分鐘 (睡前)"
+        ];
+        document.getElementById('exerciseTask').innerText = "今日任務：" + ex[Math.floor(Math.random()*ex.length)];
     }
 
     function saveToCalendar() {
         const kcal = document.getElementById('totalDisplay').innerText;
         const water = document.getElementById('waterText').innerText;
-        const title = `減脂日記：${kcal} kcal / ${water}`;
-        const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&add=`;
+        const task = document.getElementById('exerciseTask').innerText;
+        const title = `減脂達成：${kcal} kcal / ${water}`;
+        const detail = `運動任務：${task}\n【150cm戰鬥機 V6.0 紀錄】`;
+        const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&details=${encodeURIComponent(detail)}&add=`;
         window.open(url, '_blank');
     }
 
     function resetAll() {
-        location.reload();
+        if(confirm("確定要清除今天的紀錄嗎？")) location.reload();
     }
     
     updateTimer();
