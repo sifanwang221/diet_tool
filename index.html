@@ -3,158 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>150cm 減脂戰鬥機 v19.0</title>
+    <title>150cm 減脂戰鬥機 v18.1</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --milk-tea: #f3e9dc; 
-            --warm-white: #faf9f6;
-            --dusty-rose: #e5989b; /* 毒舌閨蜜色 */
-            --sage-green: #b7b7a4; 
-            --fog-blue: #a8dadc;   /* 嚕嚕米藍 */
-            --latte: #ddb892;
-            --text-coffee: #6b4e3d;
-            --shadow-soft: 0 8px 20px rgba(107, 78, 61, 0.08);
+            --milk-tea: #f3e9dc; --warm-white: #faf9f6; --dust-rose: #e5989b;
+            --sage: #b7b7a4; --blue: #a8dadc; --latte: #ddb892; --coffee: #6b4e3d;
+            --shadow: 0 8px 20px rgba(107, 78, 61, 0.08);
         }
-        
         body { 
-            font-family: 'Quicksand', 'Noto Sans TC', sans-serif; 
-            background-color: var(--milk-tea); 
+            font-family: 'Quicksand', 'Noto Sans TC', sans-serif; background-color: var(--milk-tea); 
             background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-            padding: 15px; display: flex; justify-content: center; margin: 0; min-height: 100vh;
-            color: var(--text-coffee);
+            padding: 15px; display: flex; justify-content: center; margin: 0; min-height: 100vh; color: var(--coffee);
         }
-        
         .container { 
-            background: var(--warm-white); 
-            width: 100%; max-width: 410px; border-radius: 40px; 
-            box-shadow: var(--shadow-soft); padding: 25px; box-sizing: border-box; 
-            border: 4px solid white; position: relative;
+            background: var(--warm-white); width: 100%; max-width: 410px; 
+            border-radius: 40px; box-shadow: var(--shadow); padding: 25px; box-sizing: border-box; border: 4px solid white;
         }
-
-        /* 吐槽與溫柔提示區 */
-        .header-box {
-            background: white; border-radius: 20px; padding: 15px; margin-bottom: 20px;
-            border: 1.5px solid var(--dusty-rose); position: relative;
-            box-shadow: 2px 4px 10px rgba(229, 152, 155, 0.1);
+        .roast-bubble {
+            background: #fff; border: 2px solid var(--dust-rose); padding: 12px; 
+            border-radius: 18px; font-size: 0.8rem; margin-bottom: 15px; 
+            color: var(--dust-rose); font-weight: bold; text-align: center; line-height: 1.4;
         }
-        .header-box b { color: var(--dusty-rose); font-size: 0.85rem; }
-        .header-box p { margin: 5px 0 0 0; font-size: 0.75rem; line-height: 1.4; color: var(--text-coffee); }
-        .moomin-icon { position: absolute; right: -5px; top: -15px; font-size: 1.5rem; }
-
         .tabs { display: flex; gap: 8px; margin-bottom: 20px; background: #ece4db; padding: 6px; border-radius: 25px; }
-        .tab-btn { 
-            flex: 1; padding: 10px; border: none; border-radius: 20px; 
-            background: transparent; font-weight: 700; font-size: 0.8rem; cursor: pointer; 
-            color: var(--text-coffee); transition: 0.3s;
-        }
-        .tab-btn.active { background: white; color: var(--latte); box-shadow: var(--shadow-soft); }
-        
+        .tab-btn { flex: 1; padding: 10px; border: none; border-radius: 20px; background: transparent; font-weight: 700; font-size: 0.85rem; cursor: pointer; color: var(--coffee); }
+        .tab-btn.active { background: white; color: var(--latte); box-shadow: var(--shadow); }
         .sub-tabs { display: flex; gap: 8px; margin-bottom: 15px; justify-content: center; }
-        .sub-btn { 
-            background: transparent; border: 1.5px solid var(--sage-green); padding: 5px 12px; 
-            border-radius: 15px; font-size: 0.7rem; color: var(--sage-green); font-weight: 700;
-        }
-        .sub-btn.active { background: var(--sage-green); color: white; }
-
+        .sub-btn { background: transparent; border: 1.5px solid var(--sage); padding: 6px 12px; border-radius: 15px; font-size: 0.75rem; color: var(--sage); font-weight: 700; }
+        .sub-btn.active { background: var(--sage); color: white; }
         .page, .sub-page { display: none; }
-        .page.active, .sub-page.active { display: block; animation: softIn 0.5s ease; }
+        .page.active, .sub-page.active { display: block; animation: softIn 0.4s ease; }
         @keyframes softIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        .card { 
-            background: white; border-radius: 22px; padding: 18px; margin-bottom: 15px; 
-            border: 1px solid rgba(171, 145, 122, 0.1);
-        }
-        h4 { margin: 0 0 10px 0; font-size: 0.85rem; color: var(--text-coffee); display: flex; align-items: center; gap: 6px; }
-        
-        .status-card { 
-            padding: 20px; border-radius: 28px; text-align: center; margin-bottom: 15px; 
-            color: white; border: 2px solid rgba(255,255,255,0.4);
-        }
-
-        input { 
-            width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid var(--milk-tea); 
-            margin-bottom: 8px; box-sizing: border-box; font-family: 'Quicksand', sans-serif;
-        }
+        .card { background: white; border-radius: 25px; padding: 18px; margin-bottom: 15px; border: 1px solid rgba(171, 145, 122, 0.1); }
+        h4 { margin: 0 0 10px 0; font-size: 0.9rem; color: var(--coffee); display: flex; align-items: center; gap: 8px; }
+        h4::before { content: '✎'; color: var(--latte); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
+        td, th { padding: 10px 5px; border-bottom: 1px dashed #eee; text-align: left; }
+        .status-card { padding: 20px; border-radius: 30px; text-align: center; margin-bottom: 15px; color: white; border: 3px solid rgba(255,255,255,0.5); }
+        input { width: 100%; padding: 12px; border-radius: 15px; border: 2px solid var(--milk-tea); margin-bottom: 8px; box-sizing: border-box; color: var(--coffee); }
         .fist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-
-        .btn-action { 
-            border: none; padding: 14px; border-radius: 20px; width: 100%; 
-            font-weight: 700; cursor: pointer; margin-bottom: 10px; transition: 0.3s;
-        }
-        .btn-random { background: var(--sage-green); color: white; }
-        .btn-sport { background: var(--dusty-rose); color: white; }
-        
-        .water-drop { font-size: 1.8rem; cursor: pointer; filter: grayscale(1) opacity(0.2); transition: 0.3s; display: inline-block; margin: 2px; }
-        .water-drop.active { filter: grayscale(0) opacity(1); transform: scale(1.1); }
-        
-        .moomin-tip { font-size: 0.7rem; color: var(--text-coffee); background: #fdf2f2; padding: 8px; border-radius: 10px; margin-top: 10px; border-left: 3px solid var(--dusty-rose); }
+        .btn-action { border: none; padding: 14px; border-radius: 20px; width: 100%; font-weight: 700; cursor: pointer; margin-bottom: 12px; }
+        .btn-random { background: var(--sage); color: white; }
+        .btn-sport { background: var(--dust-rose); color: white; }
+        .water-drop { font-size: 1.8rem; cursor: pointer; filter: sepia(0.5) opacity(0.2); transition: 0.3s; padding: 2px; }
+        .water-drop.active { filter: sepia(0) opacity(1); transform: scale(1.1); }
+        .workout-row { display: flex; justify-content: space-between; padding: 10px; background: #fffdf9; border-radius: 12px; margin-bottom: 6px; border: 1px dashed var(--dust-rose); font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header-box">
-        <span class="moomin-icon">☁️</span>
-        <b>👠 毒舌閨蜜：</b>
-        <p id="roast-text">三拳肉？妳是去參加大胃王比賽還是把自己當河馬？150cm 的胃撐成這樣，妳好意思嗎？</p>
-        <div class="moomin-tip"><b>🎨 嚕嚕米：</b>「沒關係，我們慢慢喝點水，剩下的晚餐再吃就好了喔～(摸頭)」</div>
-    </div>
+    <div class="roast-bubble">「嘖...肚子凸成這樣還想吃完？<br>分一半給下一餐的妳啦，笨蛋！」</div>
 
     <div class="tabs">
-        <button id="t1" class="tab-btn active" onclick="showPage('p1', 't1')">靈感</button>
-        <button id="t2" class="tab-btn" onclick="showPage('p2', 't2')">紀錄</button>
-        <button id="t3" class="tab-btn" onclick="showPage('p3', 't3')">行動</button>
+        <button id="t1" class="tab-btn active" onclick="showPage('p1', 't1')">靈感庫</button>
+        <button id="t2" class="tab-btn" onclick="showPage('p2', 't2')">紀錄儀</button>
+        <button id="t3" class="tab-btn" onclick="showPage('p3', 't3')">行動台</button>
     </div>
 
     <div id="p1" class="page active">
         <div class="sub-tabs">
-            <button id="st1" class="sub-btn active" onclick="showSubPage('sp1', 'st1')">超商自由配</button>
-            <button id="st2" class="sub-btn" onclick="showSubPage('sp2', 'st2')">自助餐秘密</button>
+            <button id="st1" class="sub-btn active" onclick="showSubPage('sp1', 'st1')">超商/自助餐</button>
+            <button id="st2" class="sub-btn" onclick="showSubPage('sp2', 'st2')">外食百科/技巧</button>
         </div>
         <div id="sp1" class="sub-page active">
-            <button class="btn-action btn-random" onclick="randomMeal()">🎲 隨機點餐（救救選擇障礙）</button>
-            <div id="randomDisplay" style="display:none; background:var(--warm-white); border:1px dashed var(--latte); padding:15px; border-radius:20px; margin-bottom:15px; font-size:0.8rem; text-align:center;"></div>
+            <button class="btn-action btn-random" onclick="randomMeal()">🎲 嚕嚕米隨機配餐</button>
+            <div id="randomDisplay" style="display:none; background:#fffbe6; padding:15px; border-radius:20px; margin-bottom:15px; font-size:0.85rem; text-align:center; border: 1.5px dashed var(--latte);"></div>
             <div class="card">
-                <h4>🏪 閨蜜精選：超商公式</h4>
-                <p style="font-size:0.75rem; color:var(--text-coffee);">飯糰/三明治 + 雞胸/豆漿 = 完美</p>
+                <h4>超商自由配組合</h4>
+                <table>
+                    <tr><th>類別</th><th>內容</th><th>熱量</th></tr>
+                    <tr><td>主食</td><td>飯糰/三明治/地瓜</td><td>~200k</td></tr>
+                    <tr><td>蛋白</td><td>雞胸/茶葉蛋/豆漿</td><td>~150k</td></tr>
+                    <tr><td>纖維</td><td>沙拉/關東煮蘿蔔</td><td>~80k</td></tr>
+                </table>
+            </div>
+            <div class="card">
+                <h4>自助餐公式 (0.5:1.5:2)</h4>
+                <p style="font-size:0.75rem; color:var(--coffee); line-height:1.6">
+                    🍚 0.5拳澱粉 (紫米/五穀)<br>🥩 1.5拳蛋白 (滷雞腿/蒸魚/豆腐)<br>🥬 2拳蔬菜 (挑綠色葉菜，濾油)
+                </p>
             </div>
         </div>
         <div id="sp2" class="sub-page">
+            <div class="card" style="background:#fff4f2; border-color:var(--dust-rose)">
+                <h4 style="color:var(--dust-rose)">🍱 半份餐盒生存術</h4>
+                <p style="font-size:0.75rem; line-height:1.6">
+                    1. <b>撥：</b>先撥 1/2 飯肉到小盒當點心。<br>
+                    2. <b>吃：</b>蔬菜熱量低，可全部吃完。<br>
+                    3. <b>等：</b>吃完一半等 15 分鐘，飽足感會追上妳。
+                </p>
+            </div>
             <div class="card">
-                <h4>🍱 自助餐：復刻健康餐盒</h4>
-                <p style="font-size:0.75rem; line-height:1.6;">記得「夾菜不夾汁」。省下的 50 元可以拿去買漂亮衣服，這才叫生活！</p>
+                <h4>🍜 小吃/水果指南</h4>
+                <table>
+                    <tr><th>店型</th><th>推薦吃</th><th>避開</th></tr>
+                    <tr><td>麵攤</td><td>下水湯/滷味</td><td>乾麵/肉燥</td></tr>
+                    <tr><td>水果</td><td>芭樂/番茄</td><td>西瓜/芒果</td></tr>
+                </table>
             </div>
         </div>
     </div>
 
     <div id="p2" class="page">
         <div id="totalBox" class="status-card" style="background:var(--latte)">
-            <div id="totalDisplay" style="font-size:2.8rem; font-weight:700;">0</div>
-            <div style="font-size:0.8rem; opacity:0.9;">目前的總熱量 (目標1200)</div>
+            <div id="totalDisplay" style="font-size:3rem; font-weight:700;">0</div>
+            <div style="font-size:0.85rem; opacity:0.9;">kcal (目標 1100-1200)</div>
         </div>
         <div class="card">
-            <input type="text" id="calcInput" placeholder="直接輸入算式...">
+            <h4 style="color:var(--latte)">🌙 晚上救急 (100k以下)</h4>
+            <p style="font-size:0.7rem; color:var(--coffee); margin-top:-5px">無糖氣泡水 / 藍莓10顆 / 海苔(無油)</p>
+            <input type="text" id="calcInput" placeholder="輸入算式, 如: 210+150" style="margin-top:10px">
             <div class="fist-grid">
-                <input type="number" id="f_meat" placeholder="肉拳數" oninput="autoCalc()">
-                <input type="number" id="f_veg" placeholder="菜拳數" oninput="autoCalc()">
-                <input type="number" id="f_carbs" placeholder="飯拳數" oninput="autoCalc()">
-                <input type="number" id="f_extra" placeholder="加項(k)" oninput="autoCalc()">
+                <input type="number" id="f_meat" placeholder="🥩 肉拳">
+                <input type="number" id="f_veg" placeholder="🥬 菜拳">
+                <input type="number" id="f_carbs" placeholder="🍚 飯拳">
+                <input type="number" id="f_extra" placeholder="➕ 額外">
             </div>
         </div>
-        <div id="timerBox" class="status-card" style="background:var(--dusty-rose)">
-            <div id="timer" style="font-size:1.6rem; font-weight:700;">--:--:--</div>
-            <div id="fast-status" style="font-size:0.75rem;">倒數計時中</div>
+        <div id="timerBox" class="status-card" style="background:var(--dust-rose)">
+            <div id="timer" style="font-size:1.8rem; font-weight:700;">--:--:--</div>
+            <div id="fast-status" style="font-size:0.8rem;">目前狀態</div>
         </div>
     </div>
 
     <div id="p3" class="page">
-        <div class="card" style="background:var(--fog-blue); border:none; text-align:center;">
-            <h4 style="justify-content:center; color:#555;">💧 嚕嚕米遞水 (1900ml)</h4>
+        <div class="card" style="background:var(--blue); border:none; text-align:center; color:white;">
+            <h4 style="justify-content:center; color:white; border:none">💧 每日飲水 (1900ml)</h4>
             <div id="waterGrid" style="margin: 10px 0;"></div>
-            <div id="waterText" style="font-weight:bold; color:#444;">0 ml</div>
+            <div id="waterText" style="font-weight:700; font-size:1.2rem;">0 ml</div>
         </div>
-        <button class="btn-action btn-sport" onclick="generateWorkout()">生成今日戰鬥課表</button>
+        <button class="btn-action btn-sport" onclick="generateWorkout()">🏃 生成 Rumbo 隨機課表</button>
         <div id="workout-list"></div>
     </div>
 </div>
@@ -173,12 +152,12 @@
         document.getElementById(st).classList.add('active');
     }
     function randomMeal() {
-        const m = ["雞肉飯糰+無糖豆漿", "舒肥雞沙拉+溫泉蛋", "地瓜(小)+無糖拿鐵", "關東煮蘿蔔/豆腐+茶葉蛋"];
-        const res = document.getElementById('randomDisplay');
-        res.style.display = "block";
-        res.innerHTML = `🌟 閨蜜幫妳選好了：<br><b>${m[Math.floor(Math.random()*m.length)]}</b>`;
+        const m = ["鮪魚飯糰+豆漿", "雞胸肉+地瓜(小)+蛋", "健康餐盒(吃一半)", "蕎麥麵+溫泉蛋", "滷雞腿(去皮)+兩份青菜"];
+        const res = document.getElementById('randomDisplay'); res.style.display = "block";
+        res.innerHTML = `嚕嚕米碎碎念：<br>今天吃這個啦 ➔ <b>${m[Math.floor(Math.random()*m.length)]}</b>`;
     }
-    
+    const inputs = ['calcInput', 'f_meat', 'f_veg', 'f_carbs', 'f_extra'];
+    inputs.forEach(id => document.getElementById(id).addEventListener('input', autoCalc));
     function autoCalc() {
         const formula = document.getElementById('calcInput').value;
         let inputVal = 0;
@@ -187,39 +166,30 @@
         const v = (parseFloat(document.getElementById('f_veg').value) || 0) * 35;
         const c = (parseFloat(document.getElementById('f_carbs').value) || 0) * 280;
         const e = parseInt(document.getElementById('f_extra').value) || 0;
-        const total = Math.round(inputVal + m + v + c + e);
-        document.getElementById('totalDisplay').innerText = total;
-
-        // 根據熱量變更吐槽語
-        const r = document.getElementById('roast-text');
-        if(total > 1300) r.innerText = "1300卡？妳這是在養豬還是在養自己？快去操場跑十圈！";
-        else if(total > 1000) r.innerText = "已經破千了喔，剩下的妳看著辦吧（翻白眼）。";
-        else r.innerText = "目前表現還可以，希望妳晚上的意志力跟妳嘴饞的速度一樣快。";
+        document.getElementById('totalDisplay').innerText = Math.round(inputVal + m + v + c + e);
+        localStorage.setItem('diet_v18', JSON.stringify({f: formula, m: document.getElementById('f_meat').value, v: document.getElementById('f_veg').value, c: document.getElementById('f_carbs').value, e: e}));
     }
-
-    let wCount = 0;
+    let wCount = parseInt(localStorage.getItem('water_v18')) || 0;
     const grid = document.getElementById('waterGrid');
     for(let i=0; i<8; i++) {
-        const d = document.createElement('span'); d.className = 'water-drop'; d.innerText = '💧';
+        const d = document.createElement('span'); d.className = 'water-drop' + (i<wCount?' active':''); d.innerText = '💧';
         d.onclick = function() {
             this.classList.toggle('active');
             wCount = Array.from(grid.children).filter(c => c.classList.contains('active')).length;
             document.getElementById('waterText').innerText = `${wCount * 250} ml`;
+            localStorage.setItem('water_v18', wCount);
         };
         grid.appendChild(d);
     }
-
+    document.getElementById('waterText').innerText = `${wCount * 250} ml`;
     function updateTimer() {
-        const now = new Date();
-        const start = new Date(); start.setHours(13,0,0,0);
-        const stop = new Date(); stop.setHours(19,0,0,0);
-        const tEl = document.getElementById('timer');
-        const sEl = document.getElementById('fast-status');
+        const now = new Date(); const start = new Date(); start.setHours(13,0,0,0); const stop = new Date(); stop.setHours(19,0,0,0);
+        const tEl = document.getElementById('timer'); const sEl = document.getElementById('fast-status');
         if (now >= start && now < stop) {
-            tEl.innerText = formatMs(stop - now); sEl.innerText = "進食視窗 🟢 (別塞太快！)";
+            tEl.innerText = formatMs(stop - now); sEl.innerText = "進食窗口 🟢";
         } else {
             let target = start; if (now >= stop) target.setDate(target.getDate()+1);
-            tEl.innerText = formatMs(target - now); sEl.innerText = "燃脂斷食中 🔴 (閉嘴！)";
+            tEl.innerText = formatMs(target - now); sEl.innerText = "燃脂斷食中 🔴";
         }
     }
     function formatMs(ms) {
@@ -229,13 +199,26 @@
         return `${h}:${m}:${s}`;
     }
     setInterval(updateTimer, 1000); updateTimer();
-
     function generateWorkout() {
-        const moves = ["開合跳 50下", "捲腹 20下", "棒式 1分鐘", "深蹲 20下", "波比跳 10下"];
+        const moves = [
+            {en: "Crunch", zh: "捲腹"}, {en: "Cycling Crunch", zh: "單車捲腹"}, {en: "Jumping Jack", zh: "開合跳"},
+            {en: "Knee Raise", zh: "高抬腿"}, {en: "Lunge", zh: "弓箭步"}, {en: "Mountain Climber", zh: "登山者"},
+            {en: "Plank", zh: "棒式"}, {en: "Push Up", zh: "俯臥撐"}, {en: "Squat", zh: "深蹲"},
+            {en: "Slow Jogging", zh: "超慢跑"}, {en: "Superman", zh: "超人式"}
+        ];
+        const shuffled = moves.sort(() => 0.5 - Math.random()).slice(0, 6);
         let h = "";
-        moves.forEach((m, i) => h += `<div style="padding:10px; background:#f9f9f9; margin-bottom:5px; border-radius:12px; font-size:0.75rem; border:1px dashed var(--dusty-rose)">${i+1}. ${m}</div>`);
+        shuffled.forEach((m, i) => h += `<div class="workout-row"><span><b>${i+1}.</b> ${m.en} (${m.zh})</span><span>30s</span></div>`);
         document.getElementById('workout-list').innerHTML = h;
     }
+    window.onload = () => {
+        const saved = JSON.parse(localStorage.getItem('diet_v18'));
+        if(saved) {
+            document.getElementById('calcInput').value = saved.f || ""; document.getElementById('f_meat').value = saved.m || "";
+            document.getElementById('f_veg').value = saved.v || ""; document.getElementById('f_carbs').value = saved.c || "";
+            document.getElementById('f_extra').value = saved.e || ""; autoCalc();
+        }
+    };
 </script>
 </body>
 </html>
