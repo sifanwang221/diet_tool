@@ -3,29 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>150cm 減脂戰鬥機 v13.0</title>
+    <title>150cm 減脂戰鬥機 v14.0</title>
     <style>
-        :root { --primary: #6c5ce7; --bg: #fdfbf6; --card-bg: #ffffff; --text-main: #2d3436; --water: #0984e3; --fast: #d63031; --sport: #e17055; --cheat: #fdcb6e; --green: #27ae60; }
+        :root { --primary: #6c5ce7; --bg: #fdfbf6; --card-bg: #ffffff; --water: #0984e3; --fast: #d63031; --sport: #e17055; --green: #27ae60; --sub-bg: #f1f2f6; }
         body { font-family: -apple-system, sans-serif; background-color: var(--bg); padding: 10px; display: flex; justify-content: center; margin: 0; }
-        .container { background: var(--card-bg); width: 100%; max-width: 450px; border-radius: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); padding: 20px; box-sizing: border-box; min-height: 95vh; position: relative; }
+        .container { background: var(--card-bg); width: 100%; max-width: 450px; border-radius: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); padding: 20px; box-sizing: border-box; min-height: 95vh; }
         
-        .tabs { display: flex; gap: 5px; margin-bottom: 15px; background: #eee; padding: 5px; border-radius: 15px; }
-        .tab-btn { flex: 1; padding: 10px 5px; border: none; border-radius: 10px; background: transparent; font-weight: bold; font-size: 0.8rem; cursor: pointer; transition: 0.3s; }
+        /* 主導覽 */
+        .tabs { display: flex; gap: 5px; margin-bottom: 10px; background: #eee; padding: 5px; border-radius: 15px; }
+        .tab-btn { flex: 1; padding: 10px 5px; border: none; border-radius: 10px; background: transparent; font-weight: bold; font-size: 0.8rem; cursor: pointer; }
         .tab-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .page { display: none; }
-        .page.active { display: block; }
+        
+        /* 子分頁導覽 */
+        .sub-tabs { display: flex; gap: 10px; margin-bottom: 15px; justify-content: center; }
+        .sub-btn { background: var(--sub-bg); border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; color: #666; }
+        .sub-btn.active { background: var(--primary); color: white; }
+
+        .page, .sub-page { display: none; }
+        .page.active, .sub-page.active { display: block; }
 
         .card { background: white; border: 1px solid #f1f2f6; border-radius: 18px; padding: 15px; margin-bottom: 12px; }
-        .status-card { padding: 15px; border-radius: 20px; text-align: center; margin-bottom: 10px; color: white; transition: 0.3s; }
+        .status-card { padding: 15px; border-radius: 20px; text-align: center; margin-bottom: 10px; color: white; }
         
-        /* 進度條樣式 */
-        .progress-container { background: #eee; border-radius: 10px; height: 10px; margin: 10px 0; overflow: hidden; }
-        #progress-bar { background: var(--green); width: 0%; height: 100%; transition: 0.5s; }
-
-        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 5px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
         th, td { border: 1px solid #eee; padding: 8px 4px; text-align: left; }
-        th { background: #f9f9f9; }
+        th { background: #f9f9f9; color: var(--primary); }
 
+        .btn-random { background: #55efc4; border: none; padding: 10px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
+        .random-box { background: #fffbe6; border: 2px dashed #ffe58f; padding: 10px; border-radius: 10px; margin-bottom: 15px; text-align: center; font-size: 0.9rem; }
+        
         input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 5px; box-sizing: border-box; }
         .fist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .water-drop { font-size: 1.6rem; cursor: pointer; filter: grayscale(1); opacity: 0.3; transition: 0.2s; display: inline-block; margin: 2px; }
@@ -41,21 +47,46 @@
     </div>
 
     <div id="p1" class="page active">
-        <div class="card">
-            <h3 style="margin:0 0 10px 0">🍱 情境選食指南</h3>
-            <table>
-                <tr><th>場景</th><th>推薦(Safe)</th><th>避雷(NG)</th></tr>
-                <tr><td>麵攤</td><td>下水湯麵/肝連</td><td>乾麵/肉燥飯</td></tr>
-                <tr><td>火鍋</td><td>昆布鍋/雞/魚</td><td>沙拉醬/加工料</td></tr>
-                <tr><td>日式</td><td>烤魚/刺身/蒸蛋</td><td>炸豬排/咖哩</td></tr>
-                <tr><td>小食</td><td>茶葉蛋/無糖豆漿</td><td>蘿蔔糕/甜不辣</td></tr>
-            </table>
+        <div class="sub-tabs">
+            <button id="st1" class="sub-btn active" onclick="showSubPage('sp1', 'st1')">🏪 超商/自助餐</button>
+            <button id="st2" class="sub-btn" onclick="showSubPage('sp2', 'st2')">🍜 外食/水果</button>
         </div>
-        <div class="card">
-            <h3 style="margin:0 0 10px 0">🍎 水果分級</h3>
-            <div style="font-size:0.85rem">
-                🟢 <b>優選</b>：芭樂、小番茄、藍莓、蘋果<br>
-                🔴 <b>限量</b>：芒果、西瓜、葡萄、荔枝
+
+        <div id="sp1" class="sub-page active">
+            <button class="btn-random" onclick="randomMeal()">🎲 不知道吃啥？按我隨機推薦</button>
+            <div id="randomDisplay" class="random-box" style="display:none;"></div>
+            
+            <div class="card">
+                <h4 style="margin:0 0 10px 0">超商精選組合</h4>
+                <table>
+                    <tr><th>類別</th><th>組合內容</th><th>熱量</th></tr>
+                    <tr><td>早餐</td><td>鮪魚飯糰 + 無糖拿鐵</td><td>~300k</td></tr>
+                    <tr><td>午餐</td><td>雞肉沙拉 + 地瓜(小)</td><td>~400k</td></tr>
+                    <tr><td>點心</td><td>茶葉蛋 + 希臘優格</td><td>~180k</td></tr>
+                </table>
+            </div>
+            <div class="card">
+                <h4 style="margin:0 0 10px 0">自助餐「三拳頭」</h4>
+                <p style="font-size:0.75rem; color:#666">肉：選滷/燒，避免炸。<br>菜：兩份（綠色葉菜為主）。<br>飯：吃半碗（一拳頭）。</p>
+            </div>
+        </div>
+
+        <div id="sp2" class="sub-page">
+            <div class="card">
+                <h4 style="margin:0 0 10px 0">早餐店/小吃攤 (健康選)</h4>
+                <table>
+                    <tr><th>店型</th><th>推薦吃</th><th>避雷</th></tr>
+                    <tr><td>早餐店</td><td>里肌蛋吐司</td><td>蘿蔔糕/漢堡肉</td></tr>
+                    <tr><td>麵攤</td><td>下水湯麵/滷蛋</td><td>乾麵/肉燥飯</td></tr>
+                    <tr><td>火鍋</td><td>雞/魚/菜盤</td><td>火鍋料/沙拉醬</td></tr>
+                </table>
+            </div>
+            <div class="card">
+                <h4 style="margin:0 0 10px 0">🍎 水果指南</h4>
+                <div style="font-size:0.8rem">
+                    <span style="color:var(--green)">●</span> <b>優選：</b>芭樂、小番茄、蘋果、藍莓<br>
+                    <span style="color:var(--fast)">●</span> <b>少吃：</b>西瓜、芒果、荔枝、龍眼
+                </div>
             </div>
         </div>
     </div>
@@ -64,32 +95,29 @@
         <div id="totalBox" class="status-card" style="background:var(--primary)">
             <div id="totalDisplay" style="font-size:2.5rem; font-weight:800;">0</div>
             <div id="targetText">目標: 1100-1200 kcal</div>
-            <div class="progress-container"><div id="progress-bar"></div></div>
         </div>
-        <div id="talkBox" style="background:#f1f2f6; padding:10px; border-radius:10px; margin-bottom:12px; font-size:0.85rem; text-align:center">(ಠ_ರೃ) 數據自動保存中</div>
-        
         <div class="card">
-            <h3 style="margin:0 0 5px 0">🧮 試算表輸入</h3>
-            <input type="text" id="calcInput" placeholder="輸入數字加減, 如: 200+150" oninput="autoCalc()">
-            <h3 style="margin:10px 0 5px 0">🖐️ 自助餐拳頭</h3>
+            <h3 style="margin:0 0 10px 0">🧮 試算表輸入</h3>
+            <input type="text" id="calcInput" placeholder="輸入數字加減, 如: 210+150" oninput="autoCalc()">
+            <h3 style="margin:15px 0 10px 0">🖐️ 自助餐拳頭</h3>
             <div class="fist-grid">
-                <input type="number" id="f_meat" placeholder="🥩 肉拳" oninput="autoCalc()">
-                <input type="number" id="f_veg" placeholder="🥬 菜拳" oninput="autoCalc()">
-                <input type="number" id="f_carbs" placeholder="🍚 澱粉拳" oninput="autoCalc()">
-                <input type="number" id="f_extra" placeholder="➕ 手動" oninput="autoCalc()">
+                <input type="number" id="f_meat" placeholder="🥩 肉(200)" oninput="autoCalc()">
+                <input type="number" id="f_veg" placeholder="🥬 菜(35)" oninput="autoCalc()">
+                <input type="number" id="f_carbs" placeholder="🍚 飯(280)" oninput="autoCalc()">
+                <input type="number" id="f_extra" placeholder="➕ 額外" oninput="autoCalc()">
             </div>
         </div>
         <div id="timerBox" class="status-card" style="background:var(--fast)">
             <div id="timer" style="font-size:1.5rem; font-weight:800;">--:--:--</div>
-            <div id="fast-status" style="font-size:0.75rem">斷食狀態...</div>
+            <div id="fast-status" style="font-size:0.75rem">燃脂中...</div>
         </div>
     </div>
 
     <div id="p3" class="page">
-        <div class="card" style="background:#e1f5fe; border:none; text-align:center">
-            <h3 style="color:var(--water); margin-top:0">💧 每日飲水 (1900ml)</h3>
+        <div class="card" style="background:#e1f5fe; text-align:center; border:none">
+            <h3 style="color:var(--water); margin-top:0">💧 飲水 (1900ml)</h3>
             <div id="waterGrid"></div>
-            <div id="waterText" style="font-weight:bold; color:var(--water); margin-top:10px">已喝：0 ml</div>
+            <div id="waterText" style="font-weight:bold; color:var(--water); margin-top:5px">0 ml</div>
         </div>
         <button style="background:var(--sport); color:white; border:none; padding:12px; border-radius:12px; width:100%; font-weight:bold" onclick="generateWorkout()">🎲 生成 Rumbo 課表</button>
         <div id="workout-list" style="margin-top:10px"></div>
@@ -104,31 +132,42 @@
         document.getElementById(t).classList.add('active');
     }
 
+    function showSubPage(sp, st) {
+        document.querySelectorAll('.sub-page').forEach(x => x.classList.remove('active'));
+        document.querySelectorAll('.sub-btn').forEach(x => x.classList.remove('active'));
+        document.getElementById(sp).classList.add('active');
+        document.getElementById(st).classList.add('active');
+    }
+
+    function randomMeal() {
+        const meals = [
+            "🍱 午餐：去骨雞腿排沙拉 + 無糖綠 (約 380k)",
+            "🍙 早餐：鮪魚飯糰 + 茶葉蛋 (約 285k)",
+            "🍲 晚餐：關東煮(蘿蔔/豆腐/茭白筍) + 舒肥雞 (約 320k)",
+            "🥪 輕食：起司蛋吐司(不塗醬) + 黑咖啡 (約 310k)",
+            "🥗 自助餐：滷雞腿 + 兩份綠菜 + 半碗飯 (約 450k)"
+        ];
+        const res = document.getElementById('randomDisplay');
+        res.style.display = "block";
+        res.innerText = meals[Math.floor(Math.random() * meals.length)];
+    }
+
     function autoCalc() {
         const formula = document.getElementById('calcInput').value;
-        let inputTotal = 0;
-        try { if(formula.trim() !== "") inputTotal = Function('"use strict"; return (' + formula.replace(/[^-()\d/*+.]/g, '') + ')')(); } catch(e) {}
+        let inputVal = 0;
+        try { if(formula.trim() !== "") inputVal = Function('"use strict"; return (' + formula.replace(/[^-()\d/*+.]/g, '') + ')')(); } catch(e) {}
         
         const m = (parseFloat(document.getElementById('f_meat').value) || 0) * 200;
         const v = (parseFloat(document.getElementById('f_veg').value) || 0) * 35;
         const c = (parseFloat(document.getElementById('f_carbs').value) || 0) * 280;
         const e = parseInt(document.getElementById('f_extra').value) || 0;
         
-        const final = Math.round(inputTotal + m + v + c + e);
+        const final = Math.round(inputVal + m + v + c + e);
         document.getElementById('totalDisplay').innerText = final;
-        
-        // 進度條與顏色邏輯
-        const bar = document.getElementById('progress-bar');
-        const pct = Math.min((final / 1200) * 100, 100);
-        bar.style.width = pct + '%';
-        if(final > 1250) bar.style.background = 'var(--fast)';
-        else if(final >= 1000) bar.style.background = 'var(--green)';
-        else bar.style.background = '#fdcb6e';
-
         localStorage.setItem('dietData', JSON.stringify({f: formula, m: m/200, v: v/35, c: c/280, e: e}));
     }
 
-    // 初始化與飲水保存
+    // 初始化飲水與數據恢復 (與 v13.0 相同)
     let wCount = parseInt(localStorage.getItem('waterCount')) || 0;
     const grid = document.getElementById('waterGrid');
     for(let i=0; i<8; i++) {
@@ -138,14 +177,13 @@
             this.style.filter = this.style.filter === 'grayscale(0)' ? 'grayscale(1)' : 'grayscale(0)';
             this.style.opacity = this.style.opacity === '1' ? '0.3' : '1';
             wCount = Array.from(grid.children).filter(c => c.style.filter === 'grayscale(0)').length;
-            document.getElementById('waterText').innerText = `已喝：${wCount * 250} ml`;
+            document.getElementById('waterText').innerText = `${wCount * 250} ml`;
             localStorage.setItem('waterCount', wCount);
         };
         grid.appendChild(d);
     }
-    document.getElementById('waterText').innerText = `已喝：${wCount * 250} ml`;
+    document.getElementById('waterText').innerText = `${wCount * 250} ml`;
 
-    // 恢復紀錄
     window.onload = () => {
         const saved = JSON.parse(localStorage.getItem('dietData'));
         if(saved) {
@@ -162,7 +200,7 @@
         const moves = ["Jumping Jack", "Crunch", "Plank", "Squat", "Push Up", "Mountain Climber"];
         const shuffled = moves.sort(() => 0.5 - Math.random());
         let h = "";
-        shuffled.forEach((m, i) => h += `<div style="padding:10px; background:#f9f9f9; margin-bottom:5px; border-radius:10px"><b>${i+1}.</b> ${m} - 30s</div>`);
+        shuffled.forEach((m, i) => h += `<div style="padding:10px; background:#f9f9f9; margin-bottom:5px; border-radius:10px; font-size:0.85rem"><b>${i+1}.</b> ${m} - 30s</div>`);
         document.getElementById('workout-list').innerHTML = h;
     }
 
@@ -173,10 +211,10 @@
         const tEl = document.getElementById('timer');
         const sEl = document.getElementById('fast-status');
         if (now >= start && now < stop) {
-            tEl.innerText = formatMs(stop - now); sEl.innerText = "進食窗口開放中 🟢";
+            tEl.innerText = formatMs(stop - now); sEl.innerText = "進食窗口 🟢";
         } else {
             let target = start; if (now >= stop) target.setDate(target.getDate()+1);
-            tEl.innerText = formatMs(target - now); sEl.innerText = "斷食燃脂中 🔴";
+            tEl.innerText = formatMs(target - now); sEl.innerText = "斷食中 🔴";
         }
     }
     function formatMs(ms) {
