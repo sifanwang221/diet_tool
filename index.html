@@ -3,535 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>150cm 減脂戰鬥機 v17.0</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>150cm 減脂戰鬥機 v19.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --primary: #7864f1; /* 微調主色，更鮮明 */
-            --primary-light: #a29bfe;
-            --bg: #fdfbf6; 
-            --card-bg: rgba(255, 255, 255, 0.95); /* 微微透明 */
-            --text-main: #2d3436;
-            --text-sub: #636e72;
-            --water: #0984e3; 
-            --fast: #e74c3c; /* 修正更鮮明的紅色 */
-            --sport: #e17055; 
-            --green: #27ae60; 
-            --sub-bg: #f1f2f6;
-            
-            /* 高級陰影 */
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-            --shadow-md: 0 10px 30px rgba(108, 92, 231, 0.08);
-            --shadow-lg: 0 20px 40px rgba(108, 92, 231, 0.12);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --milk-tea: #f3e9dc; 
+            --warm-white: #faf9f6;
+            --dusty-rose: #e5989b; /* 毒舌閨蜜色 */
+            --sage-green: #b7b7a4; 
+            --fog-blue: #a8dadc;   /* 嚕嚕米藍 */
+            --latte: #ddb892;
+            --text-coffee: #6b4e3d;
+            --shadow-soft: 0 8px 20px rgba(107, 78, 61, 0.08);
         }
         
         body { 
-            font-family: 'Poppins', 'Noto Sans TC', -apple-system, sans-serif; 
-            background-color: var(--bg); 
-            background-image: radial-gradient(#e1e8ed 1px, transparent 1px); /* 淡淡的底紋 */
-            background-size: 20px 20px;
-            padding: 15px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: flex-start;
-            margin: 0; 
-            min-height: 100vh;
-            color: var(--text-main);
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Quicksand', 'Noto Sans TC', sans-serif; 
+            background-color: var(--milk-tea); 
+            background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+            padding: 15px; display: flex; justify-content: center; margin: 0; min-height: 100vh;
+            color: var(--text-coffee);
         }
         
         .container { 
-            background: var(--card-bg); 
-            width: 100%; 
-            max-width: 420px; /* 稍微縮小看起來更緊湊 */
-            border-radius: 35px; /* 更圓潤 */
-            box-shadow: var(--shadow-lg); 
-            padding: 30px 25px; /* 增加內邊距 */
-            box-sizing: border-box; 
-            backdrop-filter: blur(10px); /* 玻璃擬態 */
-            border: 1px solid rgba(255,255,255,0.6);
-            position: relative; 
-            overflow: hidden;
-        }
-        
-        /* 頁面頂部裝飾 */
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            left: -50px;
-            width: 100px;
-            height: 100px;
-            background: var(--primary-light);
-            border-radius: 50%;
-            opacity: 0.2;
-            filter: blur(20px);
+            background: var(--warm-white); 
+            width: 100%; max-width: 410px; border-radius: 40px; 
+            box-shadow: var(--shadow-soft); padding: 25px; box-sizing: border-box; 
+            border: 4px solid white; position: relative;
         }
 
-        /* 主導覽 UI 升級 */
-        .tabs { 
-            display: flex; 
-            gap: 2px; 
-            margin-bottom: 20px; 
-            background: #eee; 
-            padding: 6px; 
-            border-radius: 20px; 
-            position: relative;
-            z-index: 1;
+        /* 吐槽與溫柔提示區 */
+        .header-box {
+            background: white; border-radius: 20px; padding: 15px; margin-bottom: 20px;
+            border: 1.5px solid var(--dusty-rose); position: relative;
+            box-shadow: 2px 4px 10px rgba(229, 152, 155, 0.1);
         }
+        .header-box b { color: var(--dusty-rose); font-size: 0.85rem; }
+        .header-box p { margin: 5px 0 0 0; font-size: 0.75rem; line-height: 1.4; color: var(--text-coffee); }
+        .moomin-icon { position: absolute; right: -5px; top: -15px; font-size: 1.5rem; }
+
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; background: #ece4db; padding: 6px; border-radius: 25px; }
         .tab-btn { 
-            flex: 1; 
-            padding: 12px 5px; 
-            border: none; 
-            border-radius: 15px; 
-            background: transparent; 
-            font-weight: 700; 
-            font-size: 0.85rem; 
-            cursor: pointer; 
-            transition: var(--transition);
-            color: var(--text-sub);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
+            flex: 1; padding: 10px; border: none; border-radius: 20px; 
+            background: transparent; font-weight: 700; font-size: 0.8rem; cursor: pointer; 
+            color: var(--text-coffee); transition: 0.3s;
         }
-        .tab-btn.active { 
-            background: white; 
-            color: var(--primary); 
-            box-shadow: var(--shadow-sm); 
-        }
+        .tab-btn.active { background: white; color: var(--latte); box-shadow: var(--shadow-soft); }
         
-        /* 子導覽 UI 升級 */
-        .sub-tabs { 
-            display: flex; 
-            gap: 8px; 
-            margin-bottom: 20px; 
-            justify-content: center; 
-            z-index: 1;
-            position: relative;
-        }
+        .sub-tabs { display: flex; gap: 8px; margin-bottom: 15px; justify-content: center; }
         .sub-btn { 
-            background: var(--sub-bg); 
-            border: 1px solid transparent; 
-            padding: 8px 16px; 
-            border-radius: 20px; 
-            font-size: 0.75rem; 
-            font-weight: 600;
-            cursor: pointer; 
-            color: var(--text-sub);
-            transition: var(--transition);
+            background: transparent; border: 1.5px solid var(--sage-green); padding: 5px 12px; 
+            border-radius: 15px; font-size: 0.7rem; color: var(--sage-green); font-weight: 700;
         }
-        .sub-btn:hover { background: #e2e6ea; }
-        .sub-btn.active { 
-            background: white; 
-            color: var(--primary); 
-            border-color: rgba(120, 100, 241, 0.2);
-            box-shadow: var(--shadow-sm);
-        }
+        .sub-btn.active { background: var(--sage-green); color: white; }
 
-        .page, .sub-page { display: none; animation: fadeIn 0.4s ease; }
-        .page.active, .sub-page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .page, .sub-page { display: none; }
+        .page.active, .sub-page.active { display: block; animation: softIn 0.5s ease; }
+        @keyframes softIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 卡片設計升級 */
         .card { 
-            background: white; 
-            border-radius: 22px; 
-            padding: 20px; 
-            margin-bottom: 15px; 
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            border: 1px solid rgba(0,0,0,0.01);
-            position: relative;
-            z-index: 1;
+            background: white; border-radius: 22px; padding: 18px; margin-bottom: 15px; 
+            border: 1px solid rgba(171, 145, 122, 0.1);
         }
-        .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        h4 { margin: 0 0 10px 0; font-size: 0.85rem; color: var(--text-coffee); display: flex; align-items: center; gap: 6px; }
         
-        h4 { 
-            margin: 0 0 12px 0; 
-            color: var(--text-main); 
-            font-size: 0.95rem; 
-            font-weight: 700;
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-        }
-        h4::before {
-            content: '';
-            width: 4px;
-            height: 16px;
-            background: var(--primary);
-            border-radius: 4px;
-            display: inline-block;
-        }
-        
-        /* 表格 UI 升級 */
-        table { width: 100%; border-collapse: separate; border-spacing: 0 5px; font-size: 0.8rem; margin-top: -5px;}
-        th { text-align: left; color: var(--primary); padding: 8px 5px; font-weight: 700; border-bottom: 2px solid #eee; }
-        td { background: #fbfbfb; padding: 10px 8px; border: none; transition: var(--transition); }
-        tr:last-child td:first-child { border-bottom-left-radius: 10px; }
-        tr:last-child td:last-child { border-bottom-right-radius: 10px; }
-        tr:hover td { background: #f1f2f6; }
-
-        /* 數字標籤與狀態 */
-        .kcal-tag { color: var(--text-sub); font-size: 0.75rem; font-family: 'Poppins', sans-serif; opacity: 0.8; }
         .status-card { 
-            padding: 20px; 
-            border-radius: 25px; 
-            text-align: center; 
-            margin-bottom: 15px; 
-            color: white; 
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        /* 狀態卡片光暈效果 */
-        .status-card::after {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
-            opacity: 0.8;
+            padding: 20px; border-radius: 28px; text-align: center; margin-bottom: 15px; 
+            color: white; border: 2px solid rgba(255,255,255,0.4);
         }
 
-        /* 按鈕 UI 升級 */
-        button.btn-action {
-            border: none;
-            padding: 14px;
-            border-radius: 18px;
-            width: 100%;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            z-index: 1;
-            position: relative;
-        }
-        button.btn-action:active { transform: scale(0.97); }
-        
-        .btn-random { 
-            background: linear-gradient(135deg, #55efc4, #00b894); 
-            color: white; 
-            margin-bottom: 15px; 
-            box-shadow: 0 5px 15px rgba(0, 184, 148, 0.25); 
-        }
-        .btn-random:hover { box-shadow: 0 8px 20px rgba(0, 184, 148, 0.35); }
-
-        .btn-sport { 
-            background: linear-gradient(135deg, var(--sport), #ff7675); 
-            color: white; 
-            box-shadow: 0 5px 15px rgba(225, 112, 85, 0.25);
-        }
-        .btn-sport:hover { box-shadow: 0 8px 20px rgba(225, 112, 85, 0.35); }
-
-        /* 輸入框與表單升級 */
         input { 
-            width: 100%; 
-            padding: 12px 15px; 
-            border-radius: 12px; 
-            border: 2px solid #eee; 
-            margin-bottom: 8px; 
-            box-sizing: border-box; 
-            font-size: 1rem; 
-            transition: var(--transition);
-            font-family: 'Poppins', sans-serif;
-            background: #fbfbfb;
+            width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid var(--milk-tea); 
+            margin-bottom: 8px; box-sizing: border-box; font-family: 'Quicksand', sans-serif;
         }
-        input:focus { 
-            border-color: var(--primary-light); 
-            outline: none; 
-            background: white;
-            box-shadow: 0 0 0 4px rgba(120, 100, 241, 0.1);
-        }
-        input[type="number"] { font-weight: 600; }
-        
-        .fist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        
-        /* 飲水 UI 升級 */
-        .water-grid { display: flex; justify-content: center; gap: 5px; flex-wrap: wrap; margin: 15px 0; }
-        .water-drop { 
-            font-size: 2rem; 
-            cursor: pointer; 
-            filter: grayscale(1) drop-shadow(0 2px 2px rgba(0,0,0,0.1)); 
-            opacity: 0.2; 
-            transition: var(--transition); 
-            display: inline-block; 
-            margin: 2px;
-            transform-origin: center bottom;
-        }
-        .water-drop:hover { transform: scale(1.1); opacity: 0.5; }
-        .water-drop.active { 
-            filter: grayscale(0) drop-shadow(0 4px 6px rgba(9, 132, 227, 0.2)); 
-            opacity: 1; 
-            animation: waterPop 0.4s ease-out;
-        }
-        @keyframes waterPop {
-            0% { transform: scale(0.5) translateY(10px); opacity: 0; }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
+        .fist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
-        /* 運動列表 UI 升級 */
-        .workout-row { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 14px 18px; 
-            background: #fbfbfb; 
-            border-radius: 15px; 
-            margin-bottom: 8px; 
-            font-size: 0.9rem; 
-            transition: var(--transition);
-            border: 1px solid transparent;
+        .btn-action { 
+            border: none; padding: 14px; border-radius: 20px; width: 100%; 
+            font-weight: 700; cursor: pointer; margin-bottom: 10px; transition: 0.3s;
         }
-        .workout-row:hover { background: white; border-color: rgba(0,0,0,0.03); box-shadow: var(--shadow-sm); }
-        .workout-name { font-weight: 600; color: var(--text-main); }
-        .workout-time { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--sport); background: rgba(225, 112, 85, 0.1); padding: 4px 10px; border-radius: 8px; }
-
-        /* 字體與數字優化 */
-        .big-num { font-family: 'Poppins', sans-serif; font-variant-numeric: tabular-nums; letter-spacing: -1px; }
+        .btn-random { background: var(--sage-green); color: white; }
+        .btn-sport { background: var(--dusty-rose); color: white; }
+        
+        .water-drop { font-size: 1.8rem; cursor: pointer; filter: grayscale(1) opacity(0.2); transition: 0.3s; display: inline-block; margin: 2px; }
+        .water-drop.active { filter: grayscale(0) opacity(1); transform: scale(1.1); }
+        
+        .moomin-tip { font-size: 0.7rem; color: var(--text-coffee); background: #fdf2f2; padding: 8px; border-radius: 10px; margin-top: 10px; border-left: 3px solid var(--dusty-rose); }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <div class="header-box">
+        <span class="moomin-icon">☁️</span>
+        <b>👠 毒舌閨蜜：</b>
+        <p id="roast-text">三拳肉？妳是去參加大胃王比賽還是把自己當河馬？150cm 的胃撐成這樣，妳好意思嗎？</p>
+        <div class="moomin-tip"><b>🎨 嚕嚕米：</b>「沒關係，我們慢慢喝點水，剩下的晚餐再吃就好了喔～(摸頭)」</div>
+    </div>
+
     <div class="tabs">
-        <button id="t1" class="tab-btn active" onclick="showPage('p1', 't1')"><span>💡</span> 靈感庫</button>
-        <button id="t2" class="tab-btn" onclick="showPage('p2', 't2')"><span>📊</span> 紀錄儀</button>
-        <button id="t3" class="tab-btn" onclick="showPage('p3', 't3')"><span>🏃</span> 運動/水</button>
+        <button id="t1" class="tab-btn active" onclick="showPage('p1', 't1')">靈感</button>
+        <button id="t2" class="tab-btn" onclick="showPage('p2', 't2')">紀錄</button>
+        <button id="t3" class="tab-btn" onclick="showPage('p3', 't3')">行動</button>
     </div>
 
     <div id="p1" class="page active">
         <div class="sub-tabs">
-            <button id="st1" class="sub-btn active" onclick="showSubPage('sp1', 'st1')">🏪 超商/自助餐</button>
-            <button id="st2" class="sub-btn" onclick="showSubPage('sp2', 'st2')">🍜 外食/水果</button>
+            <button id="st1" class="sub-btn active" onclick="showSubPage('sp1', 'st1')">超商自由配</button>
+            <button id="st2" class="sub-btn" onclick="showSubPage('sp2', 'st2')">自助餐秘密</button>
         </div>
-
         <div id="sp1" class="sub-page active">
-            <button class="btn-action btn-random" onclick="randomMeal()">🎲 隨機配餐</button>
-            <div id="randomDisplay" style="display:none; background:#fffbe6; border:1px solid #ffe58f; padding:18px; border-radius:18px; margin-bottom:15px; text-align:center; font-size:0.95rem; font-weight:600; color:#d35400; line-height:1.5;"></div>
-            
+            <button class="btn-action btn-random" onclick="randomMeal()">🎲 隨機點餐（救救選擇障礙）</button>
+            <div id="randomDisplay" style="display:none; background:var(--warm-white); border:1px dashed var(--latte); padding:15px; border-radius:20px; margin-bottom:15px; font-size:0.8rem; text-align:center;"></div>
             <div class="card">
-                <h4>🏪 超商自由配 (主+副)</h4>
-                <table>
-                    <tr><th>類別</th><th>內容</th><th>熱量</th></tr>
-                    <tr><td>主食</td><td>飯糰/三明治/地瓜/蕎麥麵</td><td class="kcal-tag">~200k</td></tr>
-                    <tr><td>蛋白</td><td>茶葉蛋/舒肥雞/豆漿/溫泉蛋</td><td class="kcal-tag">~150k</td></tr>
-                    <tr><td>纖維</td><td>沙拉/玉米筍/關東煮蘿蔔</td><td class="kcal-tag">~80k</td></tr>
-                </table>
-            </div>
-            <div class="card">
-                <h4>🍱 自助餐公式 (0.5+1.5+2)</h4>
-                <p style="font-size:0.8rem; color:var(--text-sub); margin:0; line-height:1.6">
-                    <b style="color:var(--text-main)">1. 澱粉：</b>半碗紫米或五穀飯 (0.5拳頭)<br>
-                    <b style="color:var(--text-main)">2. 蛋白：</b>滷雞腿(去皮) 或 蒸魚 或 滷豆腐 (1.5拳頭)<br>
-                    <b style="color:var(--text-main)">3. 蔬菜：</b>挑 3 樣綠葉菜 (2拳頭, 濾乾油)
-                </p>
+                <h4>🏪 閨蜜精選：超商公式</h4>
+                <p style="font-size:0.75rem; color:var(--text-coffee);">飯糰/三明治 + 雞胸/豆漿 = 完美</p>
             </div>
         </div>
-
         <div id="sp2" class="sub-page">
-            <div class="card" style="background:#fff4f2; border:1px solid #ffccbc;">
-                <h4 style="color:#d84315; border-left-color:#d84315;">🍱 半份餐盒生存術</h4>
-                <p style="font-size:0.8rem; color:#4e342e; line-height:1.6; margin:0">
-                    <b style="color:#bf360c">買了便當，開吃前先：</b><br>
-                    1. 撥開 1/2 的飯跟肉到小碗 (晚餐吃)<br>
-                    2. 蔬菜全部吃完<br>
-                    3. 吃完半份後等 15 分鐘再決定
-                </p>
-            </div>
             <div class="card">
-                <h4>🍜 外食避雷針</h4>
-                <table>
-                    <tr><th>店型</th><th>推薦</th><th>避開</th></tr>
-                    <tr><td>麵攤</td><td>下水湯/滷蛋</td><td>乾麵/肉燥</td></tr>
-                    <tr><td>早餐</td><td>里肌蛋吐司</td><td>蘿蔔糕/漢堡肉</td></tr>
-                    <tr><td>火鍋</td><td>雞魚肉/菜盤</td><td>火鍋料/沙拉醬</td></tr>
-                </table>
-            </div>
-            <div class="card">
-                <h4>🍎 水果份量 (每日1拳頭)</h4>
-                <div style="font-size:0.8rem; line-height:1.6">
-                    <span style="color:var(--green); font-weight:bold">优選：</span>芭樂、小番茄、蘋果、藍莓<br>
-                    <span style="color:var(--fast); font-weight:bold">少吃：</span>西瓜、芒果、荔枝、龍眼
-                </div>
+                <h4>🍱 自助餐：復刻健康餐盒</h4>
+                <p style="font-size:0.75rem; line-height:1.6;">記得「夾菜不夾汁」。省下的 50 元可以拿去買漂亮衣服，這才叫生活！</p>
             </div>
         </div>
     </div>
 
     <div id="p2" class="page">
-        <div id="totalBox" class="status-card" style="background:var(--primary)">
-            <div id="totalDisplay" class="big-num" style="font-size:3rem; font-weight:800; line-height:1;">0</div>
-            <div id="targetText" style="font-size:0.85rem; margin-top:5px; opacity:0.9;">目標: 1100-1200 kcal</div>
+        <div id="totalBox" class="status-card" style="background:var(--latte)">
+            <div id="totalDisplay" style="font-size:2.8rem; font-weight:700;">0</div>
+            <div style="font-size:0.8rem; opacity:0.9;">目前的總熱量 (目標1200)</div>
         </div>
-        
         <div class="card">
-            <input type="text" id="calcInput" placeholder="輸入算式, 如: 210+150">
-            <div class="fist-grid" style="margin-top:10px">
-                <input type="number" id="f_meat" placeholder="🥩 肉拳頭" step="0.1">
-                <input type="number" id="f_veg" placeholder="🥬 菜拳頭" step="0.1">
-                <input type="number" id="f_carbs" placeholder="🍚 澱粉拳" step="0.1">
-                <input type="number" id="f_extra" placeholder="➕ 手動 kcal">
+            <input type="text" id="calcInput" placeholder="直接輸入算式...">
+            <div class="fist-grid">
+                <input type="number" id="f_meat" placeholder="肉拳數" oninput="autoCalc()">
+                <input type="number" id="f_veg" placeholder="菜拳數" oninput="autoCalc()">
+                <input type="number" id="f_carbs" placeholder="飯拳數" oninput="autoCalc()">
+                <input type="number" id="f_extra" placeholder="加項(k)" oninput="autoCalc()">
             </div>
         </div>
-        
-        <div id="timerBox" class="status-card" style="background:var(--fast)">
-            <div id="timer" class="big-num" style="font-size:1.8rem; font-weight:800;">--:--:--</div>
-            <div id="fast-status" style="font-size:0.8rem; margin-top:3px; opacity:0.9;">斷食中...</div>
+        <div id="timerBox" class="status-card" style="background:var(--dusty-rose)">
+            <div id="timer" style="font-size:1.6rem; font-weight:700;">--:--:--</div>
+            <div id="fast-status" style="font-size:0.75rem;">倒數計時中</div>
         </div>
     </div>
 
     <div id="p3" class="page">
-        <div class="card" style="background:#e1f5fe; text-align:center; border:none; background-image: linear-gradient(to bottom, #e1f5fe, #ffffff);">
-            <h4 style="color:var(--water); margin-top:0; justify-content:center; border:none"><span>💧</span> 每日飲水 (1900ml)</h4>
-            <div class="water-grid" id="waterGrid"></div>
-            <div id="waterText" class="big-num" style="font-weight:700; color:var(--water); margin-top:10px; font-size:1.2rem">0 ml</div>
+        <div class="card" style="background:var(--fog-blue); border:none; text-align:center;">
+            <h4 style="justify-content:center; color:#555;">💧 嚕嚕米遞水 (1900ml)</h4>
+            <div id="waterGrid" style="margin: 10px 0;"></div>
+            <div id="waterText" style="font-weight:bold; color:#444;">0 ml</div>
         </div>
-        <button class="btn-action btn-sport" onclick="generateWorkout()">🎲 生成今日課表</button>
-        <div id="workout-list" style="margin-top:10px"></div>
+        <button class="btn-action btn-sport" onclick="generateWorkout()">生成今日戰鬥課表</button>
+        <div id="workout-list"></div>
     </div>
 </div>
 
 <script>
-    // --- 保持原本功能邏輯，僅修改部分 DOM 操作以配合 CSS 動畫 ---
-
     function showPage(p, t) {
         document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
         document.getElementById(p).classList.add('active');
         document.getElementById(t).classList.add('active');
     }
-
     function showSubPage(sp, st) {
         document.querySelectorAll('.sub-page').forEach(x => x.classList.remove('active'));
         document.querySelectorAll('.sub-btn').forEach(x => x.classList.remove('active'));
         document.getElementById(sp).classList.add('active');
         document.getElementById(st).classList.add('active');
     }
-
     function randomMeal() {
-        const mains = ["鮪魚飯糰", "雞肉沙拉", "里肌三明治", "小地瓜", "茶碗蒸+蕎麥麵"];
-        const pros = ["無糖豆漿", "茶葉蛋x2", "舒肥雞胸", "無糖拿鐵", "低脂牛奶"];
-        const m = mains[Math.floor(Math.random()*mains.length)];
-        const p = pros[Math.floor(Math.random()*pros.length)];
+        const m = ["雞肉飯糰+無糖豆漿", "舒肥雞沙拉+溫泉蛋", "地瓜(小)+無糖拿鐵", "關東煮蘿蔔/豆腐+茶葉蛋"];
         const res = document.getElementById('randomDisplay');
         res.style.display = "block";
-        res.innerHTML = `🍴 推薦組合：<br>${m} + ${p}<br><span style="font-size:0.75rem; color:#e67e22; font-weight:normal;">估計：350~450 kcal</span>`;
+        res.innerHTML = `🌟 閨蜜幫妳選好了：<br><b>${m[Math.floor(Math.random()*m.length)]}</b>`;
     }
-
-    // --- 數據處理核心 (加入自動計算的 input 監聽) ---
-    const inputs = ['calcInput', 'f_meat', 'f_veg', 'f_carbs', 'f_extra'];
-    inputs.forEach(id => {
-        document.getElementById(id).addEventListener('input', autoCalc);
-    });
-
+    
     function autoCalc() {
         const formula = document.getElementById('calcInput').value;
         let inputVal = 0;
-        // 簡單的算式計算
-        try { 
-            if(formula.trim() !== "") {
-                // 安全清理：只保留數字、運算子和小數點
-                const sanitizedFormula = formula.replace(/[^-()\d/*+.]/g, '');
-                inputVal = Function('"use strict"; return (' + sanitizedFormula + ')')(); 
-            }
-        } catch(e) { inputVal = 0; }
-        
-        // 拳頭換算
+        try { if(formula.trim() !== "") inputVal = Function('"use strict"; return (' + formula.replace(/[^-()\d/*+.]/g, '') + ')')(); } catch(e) {}
         const m = (parseFloat(document.getElementById('f_meat').value) || 0) * 200;
         const v = (parseFloat(document.getElementById('f_veg').value) || 0) * 35;
         const c = (parseFloat(document.getElementById('f_carbs').value) || 0) * 280;
         const e = parseInt(document.getElementById('f_extra').value) || 0;
-        
-        const final = Math.round(inputVal + m + v + c + e);
-        document.getElementById('totalDisplay').innerText = final;
-        
-        // 模式判定與噴人語句移除了，若要加上可在此處恢復，代碼需增加模式狀態紀錄
-        
-        // 保存數據
-        localStorage.setItem('dietData_v17', JSON.stringify({
-            f: formula, 
-            m: document.getElementById('f_meat').value, 
-            v: document.getElementById('f_veg').value, 
-            c: document.getElementById('f_carbs').value, 
-            e: document.getElementById('f_extra').value
-        }));
+        const total = Math.round(inputVal + m + v + c + e);
+        document.getElementById('totalDisplay').innerText = total;
+
+        // 根據熱量變更吐槽語
+        const r = document.getElementById('roast-text');
+        if(total > 1300) r.innerText = "1300卡？妳這是在養豬還是在養自己？快去操場跑十圈！";
+        else if(total > 1000) r.innerText = "已經破千了喔，剩下的妳看著辦吧（翻白眼）。";
+        else r.innerText = "目前表現還可以，希望妳晚上的意志力跟妳嘴饞的速度一樣快。";
     }
 
-    // --- 飲水邏輯 (優化 active 狀態操作) ---
-    let wCount = parseInt(localStorage.getItem('waterCount_v17')) || 0;
+    let wCount = 0;
     const grid = document.getElementById('waterGrid');
     for(let i=0; i<8; i++) {
-        const d = document.createElement('span'); 
-        d.className = 'water-drop'; 
-        d.innerText = '💧';
-        // 恢復灰色/彩色狀態
-        if(i < wCount) { d.classList.add('active'); }
-        
+        const d = document.createElement('span'); d.className = 'water-drop'; d.innerText = '💧';
         d.onclick = function() {
-            // 切換 active 狀態，CSS 會處理動畫
             this.classList.toggle('active');
-            
-            // 重新計算亮起的水滴數
             wCount = Array.from(grid.children).filter(c => c.classList.contains('active')).length;
             document.getElementById('waterText').innerText = `${wCount * 250} ml`;
-            localStorage.setItem('waterCount_v17', wCount);
         };
         grid.appendChild(d);
     }
-    document.getElementById('waterText').innerText = `${wCount * 250} ml`;
 
-    // --- 初始化恢復紀錄 ---
-    window.onload = () => {
-        const saved = JSON.parse(localStorage.getItem('dietData_v17'));
-        if(saved) {
-            document.getElementById('calcInput').value = saved.f || "";
-            document.getElementById('f_meat').value = saved.m || "";
-            document.getElementById('f_veg').value = saved.v || "";
-            document.getElementById('f_carbs').value = saved.c || "";
-            document.getElementById('f_extra').value = saved.e || "";
-            autoCalc(); // 恢復紀錄後自動計算一次熱量
-        }
-    };
-
-    // --- 運動生成器 ---
-    function generateWorkout() {
-        const moves = ["Jumping Jack", "Crunch", "Plank", "Squat", "Push Up", "Mountain Climber", "Slow Jogging", "Lunges"];
-        const shuffled = moves.sort(() => 0.5 - Math.random()).slice(0, 6);
-        let h = "";
-        shuffled.forEach((m, i) => {
-            h += `<div class="workout-row"><span class="workout-name">${i+1}. ${m}</span><span class="workout-time">30s</span></div>`;
-        });
-        document.getElementById('workout-list').innerHTML = h;
-    }
-
-    // --- 186 斷食計時器核心邏輯 ---
     function updateTimer() {
         const now = new Date();
-        const start = new Date(); start.setHours(13,0,0,0); // 13:00 開食
-        const stop = new Date(); stop.setHours(19,0,0,0);  // 19:00 關食
-        
+        const start = new Date(); start.setHours(13,0,0,0);
+        const stop = new Date(); stop.setHours(19,0,0,0);
         const tEl = document.getElementById('timer');
         const sEl = document.getElementById('fast-status');
-        const box = document.getElementById('timerBox');
-        
         if (now >= start && now < stop) {
-            tEl.innerText = formatMs(stop - now); sEl.innerText = "進食窗口 🟢"; 
-            box.style.background = "#27ae60"; // 🟢
+            tEl.innerText = formatMs(stop - now); sEl.innerText = "進食視窗 🟢 (別塞太快！)";
         } else {
-            let target = start; 
-            if (now >= stop) target.setDate(target.getDate()+1); // 目標是明天 start
-            tEl.innerText = formatMs(target - now); sEl.innerText = "斷食中 🔴";
-            box.style.background = "#e74c3c"; // 🔴
+            let target = start; if (now >= stop) target.setDate(target.getDate()+1);
+            tEl.innerText = formatMs(target - now); sEl.innerText = "燃脂斷食中 🔴 (閉嘴！)";
         }
     }
     function formatMs(ms) {
@@ -540,8 +228,14 @@
         const s = Math.floor((ms%60000)/1000).toString().padStart(2,'0');
         return `${h}:${m}:${s}`;
     }
-    setInterval(updateTimer, 1000); 
-    updateTimer(); // 立即執行
+    setInterval(updateTimer, 1000); updateTimer();
+
+    function generateWorkout() {
+        const moves = ["開合跳 50下", "捲腹 20下", "棒式 1分鐘", "深蹲 20下", "波比跳 10下"];
+        let h = "";
+        moves.forEach((m, i) => h += `<div style="padding:10px; background:#f9f9f9; margin-bottom:5px; border-radius:12px; font-size:0.75rem; border:1px dashed var(--dusty-rose)">${i+1}. ${m}</div>`);
+        document.getElementById('workout-list').innerHTML = h;
+    }
 </script>
 </body>
 </html>
