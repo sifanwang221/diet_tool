@@ -3,55 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>150cm 減脂戰鬥機 v11.2</title>
+    <title>150cm 減脂戰鬥機 v11.3</title>
     <style>
         :root { --primary: #6c5ce7; --bg: #fdfbf6; --card-bg: #ffffff; --text-main: #2d3436; --water: #0984e3; --fast: #d63031; --sport: #e17055; --cheat: #fdcb6e; }
         body { font-family: -apple-system, sans-serif; background-color: var(--bg); padding: 10px; display: flex; justify-content: center; margin: 0; }
         .container { background: var(--card-bg); width: 100%; max-width: 450px; border-radius: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); padding: 20px; box-sizing: border-box; min-height: 95vh; }
         
         .tabs { display: flex; gap: 5px; margin-bottom: 15px; background: #eee; padding: 5px; border-radius: 15px; }
-        .tab-btn { flex: 1; padding: 10px 5px; border: none; border-radius: 10px; background: transparent; font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: 0.3s; }
+        .tab-btn { flex: 1; padding: 10px 5px; border: none; border-radius: 10px; background: transparent; font-weight: bold; font-size: 0.8rem; cursor: pointer; }
         .tab-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .page { display: none; }
         .page.active { display: block; }
 
         .card { background: white; border: 1px solid #f1f2f6; border-radius: 18px; padding: 15px; margin-bottom: 15px; }
-        .status-card { padding: 15px; border-radius: 20px; text-align: center; margin-bottom: 10px; color: white; transition: 0.3s; }
+        h4 { margin: 10px 0 5px 0; color: var(--primary); font-size: 0.9rem; }
+        .food-tag { display: inline-block; background: #f1f2f6; padding: 4px 8px; border-radius: 8px; margin: 2px; font-size: 0.75rem; color: #555; }
+        .danger { background: #fff1f0; color: #cf1322; }
         
-        /* 模式切換按鈕 */
+        .status-card { padding: 15px; border-radius: 20px; text-align: center; margin-bottom: 10px; color: white; }
         .mode-toggle { display: flex; background: #eee; border-radius: 10px; margin-bottom: 15px; padding: 3px; }
-        .mode-btn { flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: 0.3s; }
+        .mode-btn { flex: 1; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
         .mode-btn.active { background: var(--primary); color: white; }
         .mode-btn.cheat-active { background: var(--cheat); color: #2d3436; }
 
-        input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 8px; box-sizing: border-box; font-size: 1rem; }
+        input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 8px; box-sizing: border-box; }
         button { padding: 12px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; width: 100%; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-sport { background: var(--sport); color: white; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="tabs">
-        <button id="t1" class="tab-btn active" onclick="showPage('p1', 't1')">💡 外食靈感</button>
-        <button id="t2" class="tab-btn" onclick="showPage('p2', 't2')">📊 斷食紀錄</button>
-        <button id="t3" class="tab-btn" onclick="showPage('p3', 't3')">🏃 運動飲水</button>
+        <button id="t1" class="tab-btn active" onclick="showPage('p1', 't1')">💡 靈感庫</button>
+        <button id="t2" class="tab-btn" onclick="showPage('p2', 't2')">📊 紀錄</button>
+        <button id="t3" class="tab-btn" onclick="showPage('p3', 't3')">🏃 運動</button>
     </div>
 
     <div id="p1" class="page active">
         <div class="card">
-            <h3>🍱 聚餐怎麼選？</h3>
-            <p style="font-size:0.85rem; color:#666">
-                1. 盡量選火鍋或日式料理。<br>
-                2. 先吃菜，再吃肉，最後吃澱粉。<br>
-                3. 飲料選無糖，沾醬少用沙茶。<br>
-                4. 既然出來聚餐，就快樂吃，明天再補！
-            </p>
+            <h4>🍞 麵包店 (選硬不選軟)</h4>
+            <div class="food-tag">貝果 (250k)</div><div class="food-tag">法國麵包 (200k)</div>
+            <div class="food-tag">全麥吐司/片 (120k)</div>
+            <div class="food-tag danger">❌ 奶酥/波羅 (450k+)</div>
+            
+            <h4>🍳 早餐店 (去美乃滋)</h4>
+            <div class="food-tag">原味蛋餅 (260k)</div><div class="food-tag">里肌蛋吐司 (350k)</div>
+            <div class="food-tag">玉米蛋餅 (290k)</div><div class="food-tag">無糖豆漿 (150k)</div>
+            
+            <h4>🍜 小吃/麵攤</h4>
+            <div class="food-tag">下水湯麵 (400k)</div><div class="food-tag">嘴邊肉 (150k)</div>
+            <div class="food-tag">滷蛋 (75k)</div><div class="food-tag">肝連 (160k)</div>
+            <div class="food-tag">燙青菜-去肉燥 (50k)</div>
+            
+            <h4>😋 嘴饞替代 (Low Kcal)</h4>
+            <div class="food-tag" style="background:#e1f5fe">原味蒟蒻條 (20k)</div>
+            <div class="food-tag" style="background:#e1f5fe">無糖氣泡水 (0k)</div>
+            <div class="food-tag" style="background:#e1f5fe">非油炸海苔 (30k)</div>
+            <div class="food-tag" style="background:#e1f5fe">冷凍藍莓/碗 (80k)</div>
+            <div class="food-tag" style="background:#e1f5fe">75%黑巧克力 (60k)</div>
         </div>
-        <div class="card" style="background:#fff8f8">
-            <h3 style="color:#d63031">小撇步：熱量銀行</h3>
-            <p style="font-size:0.8rem">聚餐當天下午可以多喝水，減少飢餓感，避免晚餐爆量。</p>
+        <div class="card" style="background:#fffbe6">
+            <h4 style="color:#d48806">💡 點餐口訣</h4>
+            <p style="font-size:0.75rem; line-height:1.6; margin:0">
+                • 麵攤不喝湯、不加肉燥、不沾醬油膏。<br>
+                • 聚餐先吃兩口菜再喝水，飽足感加倍。<br>
+                • 想喝飲料就選「無糖純茶」或「氣泡水」。
+            </p>
         </div>
     </div>
 
@@ -60,87 +77,72 @@
             <button id="m_normal" class="mode-btn active" onclick="setMode('normal')">📅 平常日</button>
             <button id="m_cheat" class="mode-btn" onclick="setMode('cheat')">🍕 放縱日</button>
         </div>
-
         <div id="timerBox" class="status-card" style="background:var(--fast)">
             <div id="timer" style="font-size:1.8rem; font-weight:800;">--:--:--</div>
-            <div id="fast-status" style="font-size:0.8rem">斷食中</div>
+            <div id="fast-status" style="font-size:0.8rem">計時中</div>
         </div>
-
         <div id="totalBox" class="status-card" style="background:var(--primary)">
             <div id="totalDisplay" style="font-size:2.5rem; font-weight:800;">0</div>
             <div id="targetText">今日總攝取 (1100-1200)</div>
         </div>
-
-        <div id="talkBox" style="background:#f1f2f6; padding:10px; border-radius:10px; margin-bottom:15px; font-size:0.9rem; text-align:center">
-            (ಠ_ರೃ) 點選模式開始紀錄
-        </div>
-
+        <div id="talkBox" style="background:#f1f2f6; padding:10px; border-radius:10px; margin-bottom:15px; font-size:0.85rem; text-align:center">(ಠ_ರೃ) 等妳輸入...</div>
         <div class="card">
-            <h3>🧮 試算表輸入</h3>
-            <input type="text" id="calcInput" placeholder="輸入數字加減..." oninput="autoCalc()">
-            <div id="calcResult" style="font-size:0.8rem; color:var(--primary); font-weight:bold"></div>
+            <h3 style="font-size:0.9rem">🧮 試算表輸入</h3>
+            <input type="text" id="calcInput" placeholder="例如: 210+150+50" oninput="autoCalc()">
+            <div id="calcResult" style="font-size:0.75rem; color:var(--primary); font-weight:bold"></div>
         </div>
-        <button class="btn-primary" onclick="saveToCalendar()">💾 儲存今日紀錄</button>
+        <button style="background:var(--primary); color:white" onclick="saveToCalendar()">💾 儲存紀錄</button>
     </div>
 
     <div id="p3" class="page">
         <div class="card" style="background:#e1f5fe; border:none; text-align:center">
-            <h3 style="color:var(--water)">💧 飲水進度 (1900ml)</h3>
-            <p style="font-size:0.75rem; color:#0984e3; margin-bottom:5px">放縱日建議多喝 500ml 排水腫</p>
+            <h3 style="color:var(--water); font-size:1rem">💧 飲水進度 (1900ml)</h3>
             <div id="waterGrid" style="display:flex; justify-content:center; gap:5px; flex-wrap:wrap; margin:10px 0"></div>
-            <div id="waterText" style="font-weight:bold; color:var(--water)">已喝：0 ml</div>
+            <div id="waterText" style="font-weight:bold; color:var(--water); font-size:0.9rem">已喝：0 ml</div>
         </div>
-        <button class="btn-sport" onclick="generateWorkout()">🎲 生成今日 Rumbo 課表</button>
-        <div id="sportTalk" style="font-size:0.85rem; color:#666; margin-bottom:10px; text-align:center"></div>
-        <div class="card" id="workout-list"></div>
+        <button style="background:var(--sport); color:white" onclick="generateWorkout()">🎲 生成今日 Rumbo 課表</button>
+        <div id="sportTalk" style="font-size:0.8rem; color:#666; margin:10px 0; text-align:center"></div>
+        <div class="card" id="workout-list" style="font-size:0.85rem"></div>
     </div>
 </div>
 
 <script>
     let currentMode = 'normal';
-
-    function setMode(mode) {
-        currentMode = mode;
-        const nBtn = document.getElementById('m_normal');
-        const cBtn = document.getElementById('m_cheat');
-        const tBox = document.getElementById('totalBox');
-        const tText = document.getElementById('targetText');
-
-        if(mode === 'normal') {
-            nBtn.classList.add('active'); cBtn.classList.remove('cheat-active');
-            tBox.style.background = 'var(--primary)'; tText.innerText = '今日總攝取 (1100-1200)';
-        } else {
-            nBtn.classList.remove('active'); cBtn.classList.add('cheat-active');
-            tBox.style.background = 'var(--cheat)'; tText.innerText = '放縱日模式 (享受當下！)';
-        }
-        autoCalc();
-    }
-
-    function autoCalc() {
-        const formula = document.getElementById('calcInput').value;
-        let total = 0;
-        try { if(formula.trim() !== "") total = Function('"use strict"; return (' + formula.replace(/[^-()\d/*+.]/g, '') + ')')(); } catch(e) { total = 0; }
-        
-        document.getElementById('totalDisplay').innerText = Math.round(total);
-        const box = document.getElementById('talkBox');
-        
-        if(currentMode === 'cheat') {
-            box.innerText = "【佛系AI】既然要吃就開心地吃，明天我們再一起努力。 (ಠ_ರೃ)";
-        } else {
-            if(total > 1250) box.innerText = "【AI閨蜜】這熱量，是想挑戰衣服的極限嗎？ (ಠ_ರೃ)";
-            else if(total >= 1000) box.innerText = "【嚕嚕米】今天的人類很聽話喵。 (ಠ_ರೃ)";
-            else box.innerText = "【厭世族】活著很累，記得補點營養。 (ಠ_ರೃ)";
-        }
-    }
-
-    // 基礎分頁、計時器、飲水與運動邏輯維持不變
     function showPage(pageId, tabId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
         document.getElementById(tabId).classList.add('active');
     }
-
+    function setMode(mode) {
+        currentMode = mode;
+        const nBtn = document.getElementById('m_normal');
+        const cBtn = document.getElementById('m_cheat');
+        const tBox = document.getElementById('totalBox');
+        const tText = document.getElementById('targetText');
+        if(mode === 'normal') {
+            nBtn.classList.add('active'); cBtn.classList.remove('cheat-active');
+            tBox.style.background = 'var(--primary)'; tText.innerText = '今日總攝取 (1100-1200)';
+        } else {
+            nBtn.classList.remove('active'); cBtn.classList.add('cheat-active');
+            tBox.style.background = 'var(--cheat)'; tText.innerText = '放縱日模式 (開心吃！)';
+        }
+        autoCalc();
+    }
+    function autoCalc() {
+        const formula = document.getElementById('calcInput').value;
+        let total = 0;
+        try { if(formula.trim() !== "") total = Function('"use strict"; return (' + formula.replace(/[^-()\d/*+.]/g, '') + ')')(); } catch(e) { total = 0; }
+        document.getElementById('totalDisplay').innerText = Math.round(total);
+        const box = document.getElementById('talkBox');
+        if(currentMode === 'cheat') {
+            box.innerText = "【佛系AI】聚餐就好好享受，明天再回歸軌道。 (ಠ_ರೃ)";
+        } else {
+            if(total > 1250) box.innerText = "【AI閨蜜】這數字...妳是打算去參加大胃王比賽？ (ಠ_ರೃ)";
+            else if(total >= 1000) box.innerText = "【嚕嚕米】表現不錯喵，再接再厲。 (ಠ_ರೃ)";
+            else box.innerText = "【厭世族】隨便啦，有吃飽就好。 (ಠ_ರೃ)";
+        }
+    }
     let wCount = 0;
     const grid = document.getElementById('waterGrid');
     for(let i=0; i<8; i++) {
@@ -154,7 +156,6 @@
         };
         grid.appendChild(d);
     }
-
     function updateTimer() {
         const now = new Date();
         const start = new Date(); start.setHours(13,0,0,0);
@@ -175,19 +176,17 @@
         return `${h}:${m}:${s}`;
     }
     setInterval(updateTimer, 1000); updateTimer();
-
     function generateWorkout() {
         const moves = ["Jumping Jack", "Crunch", "Cycling Crunch", "Knee Raise", "Mountain Climber", "Plank", "Push Up", "Squat", "Slow Jogging", "Superman"];
         const shuffled = moves.sort(() => 0.5 - Math.random()).slice(0, 6);
         let html = "";
-        shuffled.forEach((m, i) => html += `<div style="padding:10px; border-bottom:1px solid #eee"><span>${i+1}. ${m}</span></div>`);
+        shuffled.forEach((m, i) => html += `<div style="padding:8px; border-bottom:1px solid #eee"><span>${i+1}. ${m}</span></div>`);
         document.getElementById('workout-list').innerHTML = html;
-        document.getElementById('sportTalk').innerText = "運動是為了明天能繼續吃。(ಠ_ರೃ)";
+        document.getElementById('sportTalk').innerText = "動一下，不然體重計會對妳尖叫。(ಠ_ರೃ)";
     }
-    
     function saveToCalendar() {
         const k = document.getElementById('totalDisplay').innerText;
-        window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('減脂：'+k+'k')}&add=`, '_blank');
+        window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('減脂日記：'+k+'k')}&add=`, '_blank');
     }
 </script>
 </body>
