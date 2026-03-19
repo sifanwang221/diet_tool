@@ -3,159 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>150cm 減脂戰鬥機 v10.0</title>
+    <title>150cm 減脂戰鬥機 v10.1</title>
     <style>
         :root { 
             --primary: #6c5ce7; 
             --primary-light: #a29bfe;
-            --bg: #fdfbf6; /* 溫柔的淡奶油色背景 */
+            --bg: #fdfbf6; 
             --card-bg: #ffffff;
             --text-main: #2d3436;
             --text-sub: #636e72;
             --water: #0984e3; 
             --fast: #d63031; 
             --sport: #e17055; 
-            --shadow: 0 10px 20px rgba(108, 92, 231, 0.05); /* 淡淡的紫色陰影 */
+            --shadow: 0 10px 20px rgba(108, 92, 231, 0.05); 
         }
         
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            background-color: var(--bg); 
-            padding: 15px; 
-            display: flex; 
-            justify-content: center; 
-            color: var(--text-main);
-            margin: 0;
-        }
+        body { font-family: -apple-system, sans-serif; background-color: var(--bg); padding: 15px; display: flex; justify-content: center; margin: 0; }
+        .container { background: var(--card-bg); width: 100%; max-width: 450px; border-radius: 30px; box-shadow: var(--shadow); padding: 25px; box-sizing: border-box; min-height: 90vh; }
         
-        .container { 
-            background: var(--card-bg); 
-            width: 100%; 
-            max-width: 450px; 
-            border-radius: 30px; /* 更圓潤的邊角 */
-            box-shadow: var(--shadow); 
-            padding: 25px; 
-            box-sizing: border-box; 
-        }
-        
-        /* Tab Navigation 美化 */
+        /* Tab Navigation */
         .tabs { display: flex; gap: 10px; margin-bottom: 20px; background: #eee; padding: 5px; border-radius: 15px; }
-        .tab-btn { 
-            flex: 1; 
-            padding: 12px; 
-            border: none; 
-            border-radius: 10px; 
-            background: transparent; 
-            font-weight: bold; 
-            color: var(--text-sub);
-            cursor: pointer; 
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-        }
+        .tab-btn { flex: 1; padding: 12px; border: none; border-radius: 10px; background: transparent; font-weight: bold; color: var(--text-sub); cursor: pointer; transition: 0.3s; }
         .tab-btn.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-        /* Status Boxes 美化 */
+        /* Page Display Control - 關鍵修正 */
+        .page { display: none; visibility: hidden; }
+        .page.active { display: block; visibility: visible; }
+
+        /* Status Cards */
         .status-card { padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 15px; color: white; }
         .timer-box { background: var(--fast); }
-        .stats-box { background: var(--primary); background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); }
+        .stats-box { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); }
         
-        /* 對話框美化 */
-        .talk-bubble { 
-            background: #f1f2f6; 
-            color: var(--text-main); 
-            padding: 15px; 
-            border-radius: 15px; 
-            font-size: 0.9rem; 
-            margin-bottom: 15px; 
-            border-left: 5px solid var(--primary-light); 
-            position: relative; 
-            line-height: 1.4;
-        }
+        .talk-bubble { background: #f1f2f6; color: var(--text-main); padding: 15px; border-radius: 15px; font-size: 0.9rem; margin-bottom: 15px; border-left: 5px solid var(--primary-light); line-height: 1.4; }
         
-        /* 通用卡片美化 */
-        .card { 
-            background: var(--card-bg); 
-            border: 1px solid #f1f2f6; 
-            border-radius: 18px; 
-            padding: 18px; 
-            margin-bottom: 15px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.01);
-        }
-        h3 { margin: 0 0 12px 0; font-size: 1rem; color: var(--text-main); font-weight: 700; display: flex; align-items: center; gap: 5px; }
+        .card { background: var(--card-bg); border: 1px solid #f1f2f6; border-radius: 18px; padding: 18px; margin-bottom: 15px; }
+        h3 { margin: 0 0 12px 0; font-size: 1rem; color: var(--text-main); font-weight: 700; }
         
-        /* 表單元件美化 */
-        select, input { 
-            width: 100%; 
-            padding: 12px 15px; 
-            border-radius: 12px; 
-            border: 1px solid #ddd; 
-            margin-bottom: 10px; 
-            box-sizing: border-box; 
-            font-size: 1rem; 
-            transition: all 0.2s;
-            background-color: #fafafa;
-        }
-        select:focus, input:focus { 
-            border-color: var(--primary-light); 
-            outline: none; 
-            background-color: #fff;
-            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
-        }
-        
+        select, input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box; font-size: 1rem; background-color: #fafafa; }
         .fist-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 5px; }
         
-        /* 運動分頁樣式 */
-        .workout-item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            padding: 12px 5px; 
-            border-bottom: 1px solid #eee; 
-        }
-        .workout-name { font-weight: 600; color: var(--text-main); }
+        .workout-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 5px; border-bottom: 1px solid #eee; }
         .workout-time { background: #ffeaa7; color: #d63031; padding: 4px 8px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; }
 
-        /* 按鈕美化 */
-        button { 
-            padding: 15px; 
-            border: none; 
-            border-radius: 15px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            width: 100%; 
-            transition: all 0.2s; 
-            font-size: 1rem;
-            letter-spacing: 1px;
-        }
-        button:active { transform: scale(0.98); opacity: 0.9; }
-        
-        .btn-main { background: var(--primary); color: white; margin-top: 10px; box-shadow: 0 4px 15px rgba(108, 92, 231, 0.2); }
-        .btn-gen { background: var(--sport); color: white; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(225, 112, 85, 0.2); }
+        button { padding: 15px; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; font-size: 1rem; }
+        .btn-main { background: var(--primary); color: white; margin-top: 10px; }
+        .btn-gen { background: var(--sport); color: white; margin-bottom: 15px; }
+        .btn-calc { background-color: #55efc4; color: #2d3436; margin-bottom: 10px; }
         
         .ng-hint { font-size: 0.75rem; color: var(--text-sub); text-align: center; margin-top: 25px; line-height: 1.5; border-top: 1px solid #eee; padding-top: 15px; }
-        
-        /* 數字顯示美化 */
-        .big-num { font-variant-numeric: tabular-nums; letter-spacing: -1px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="tabs">
-        <button class="tab-btn active" onclick="showPage('diet', this)">🍱 飲食紀錄</button>
-        <button class="tab-btn" onclick="showPage('sport', this)">🏃 運動計畫</button>
+        <button id="btn-diet" class="tab-btn active" onclick="showPage('diet')">🍱 飲食紀錄</button>
+        <button id="btn-sport" class="tab-btn" onclick="showPage('sport')">🏃 運動計畫</button>
     </div>
 
     <div id="diet" class="page active">
         <div id="talkBox" class="talk-bubble">讀取對話中... (ಠ_ರೃ)</div>
         
         <div class="status-card timer-box" id="timerBox">
-            <div id="timer" class="big-num" style="font-size: 2rem; font-weight: 800;">--:--:--</div>
-            <div id="fast-status" style="font-size: 0.85rem; margin-top: 5px; opacity: 0.9;">186 斷食狀態讀取中</div>
+            <div id="timer" style="font-size: 2rem; font-weight: 800;">--:--:--</div>
+            <div id="fast-status" style="font-size: 0.85rem; margin-top: 5px;">186 狀態讀取中</div>
         </div>
 
         <div class="status-card stats-box">
-            <div class="big-num" style="font-size: 2.8rem; font-weight: 800;" id="totalDisplay">0</div>
+            <div style="font-size: 2.8rem; font-weight: 800;" id="totalDisplay">0</div>
             <div style="font-size: 0.85rem; opacity: 0.9;">今日攝取 (目標 1100-1200 kcal)</div>
         </div>
 
@@ -171,15 +87,15 @@
         </div>
 
         <div class="card">
-            <h3>🍱 主餐 (午/晚建議)</h3>
+            <h3>🍱 主餐建議</h3>
             <select id="l_sel" onchange="sync()">
-                <option value="0">--- 中午選這 (10種) ---</option>
+                <option value="0">--- 午餐選這 ---</option>
                 <option value="350">去骨雞腿排沙拉 (350k)</option>
                 <option value="420">超商蕎麥涼麵 (420k)</option>
                 <option value="400">滷味(青菜/蛋白/科學麵) (400k)</option>
             </select>
             <select id="d_sel" onchange="sync()">
-                <option value="0">--- 晚上選這 (10種) ---</option>
+                <option value="0">--- 晚餐選這 ---</option>
                 <option value="150">舒肥雞胸肉 (150k)</option>
                 <option value="380">火鍋(瘦肉/大量菜) (380k)</option>
                 <option value="300">關東煮(蘿蔔/豆腐/肉) (300k)</option>
@@ -189,14 +105,14 @@
         <div class="card">
             <h3>🖐️ 自助餐/手動份量</h3>
             <div class="fist-row">
-                <input type="number" id="f_meat" placeholder="🥩 肉拳頭數">
-                <input type="number" id="f_veg" placeholder="🥬 菜拳頭數">
+                <input type="number" id="f_meat" placeholder="🥩 肉拳頭" oninput="sync()">
+                <input type="number" id="f_veg" placeholder="🥬 菜拳頭" oninput="sync()">
             </div>
             <div class="fist-row">
-                <input type="number" id="f_carbs" placeholder="🍚 澱粉拳頭">
-                <input type="number" id="extra_kcal" placeholder="➕ 其他熱量">
+                <input type="number" id="f_carbs" placeholder="🍚 澱粉拳" oninput="sync()">
+                <input type="number" id="extra_kcal" placeholder="➕ 其他" oninput="sync()">
             </div>
-            <button class="btn-main" style="margin-top: 10px; background-color: #55efc4; color: #2d3436; box-shadow: none;" onclick="sync()">🔄 更新計算</button>
+            <button class="btn-calc" onclick="sync()">🔄 更新計算與吐槽</button>
         </div>
         <button class="btn-main" onclick="saveToCalendar()">💾 儲存今日紀錄到日曆</button>
     </div>
@@ -205,77 +121,62 @@
         <div id="sportTalk" class="talk-bubble">不想動嗎？我也是。 (ಠ_ರೃ)</div>
 
         <div class="card" style="background: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%); border: none;">
-            <h3 style="color: var(--water);">💧 飲水進度 (1900ml 目標)</h3>
+            <h3 style="color: var(--water);">💧 飲水進度 (1900ml)</h3>
             <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin: 15px 0;" id="waterGrid"></div>
             <div id="waterText" style="text-align:center; font-size:0.9rem; font-weight:bold; color: var(--water);">已喝：0 ml</div>
         </div>
 
         <button class="btn-gen" onclick="generateWorkout()">🎲 生成今日 Rumbo 隨機課表</button>
         
-        <div class="card" id="workout-list" style="padding-top: 10px;">
-            <div style="text-align:center; color:#ccc; padding:30px 20px;">點擊上方按鈕<br>組合今日 30 分鐘運動</div>
+        <div class="card" id="workout-list">
+            <div style="text-align:center; color:#ccc; padding:30px 20px;">點擊上方按鈕組合課表</div>
         </div>
         
         <div class="card" style="background-color: #fafafa; border-style: dashed;">
-            <h3 style="color: var(--text-sub);">💡 訓練提示</h3>
+            <h3>💡 訓練提示</h3>
             <p style="font-size: 0.85rem; color: var(--text-sub); line-height: 1.6; margin: 0;">
-                • Rumbo app 內動作重複做 <b>3 輪</b>。<br>
-                • 每個動作 <b>30-45s</b>，休息 <b>15s</b>。<br>
-                • 晚上 10 點太累可重抽溫和動作。
+                • Rumbo app 內動作重複做 3 輪。<br>
+                • 每個動作 30-45s，休息 15s。<br>
+                • 睡前 22:00 太累可抽溫和動作。
             </p>
         </div>
     </div>
 
     <div class="ng-hint">
-        <b>🚫 絕對不吃避雷區：</b><br>
-        胡蘿蔔、洋蔥、小黃瓜、番茄、苦瓜、有骨肉<br>
-        <span style="opacity: 0.7; margin-top: 5px; display: block;">22歲 | 150cm | 減脂智算機 v10.0</span>
+        <b>🚫 避雷區：</b>胡蘿蔔、洋蔥、小黃瓜、番茄、苦瓜、有骨肉<br>
+        22歲 | 150cm | 減脂智算機 v10.1
     </div>
 </div>
 
 <script>
-    // 角色吐槽與金句庫
-    const quotes = {
-        high: [
-            "【AI閨蜜】胃是百寶袋？再吃要訂大碼衣了喔。",
-            "【嚕嚕米】這肚子...沙發都要塌了喵。",
-            "【厭世族】這份量，是在吃最後一餐嗎？",
-            "【AI閨蜜】寶貝，你的自律神經斷線了嗎？"
-        ],
-        low: [
-            "【AI閨蜜】想修仙？快去補顆蛋，別暈倒。",
-            "【嚕嚕米】沒力氣鏟屎了嗎？快去吃飯喵。",
-            "【厭世族】沒吃飽怎麼有體力應付老闆？",
-            "【嚕嚕米】（盯）再不吃，我要吃掉你的肉喵。"
-        ],
-        perfect: [
-            "【AI閨蜜】算你狠，這自律程度我服了。",
-            "【嚕嚕米】哼，勉勉強強算合格吧，人類。",
-            "【厭世族】達成目標了，可以下班了嗎？",
-            "【AI閨蜜】這身材保持下去，我都想嫉妒了。"
-        ],
-        sport: [
-            "「汗水是脂肪的淚水，雖然很鹹。」",
-            "「動一下吧，難道你想讓隔壁貓看笑話？」",
-            "「這 30 分鐘是我人生最漫長的時刻。」",
-            "「運動是為了活著吃更多美食。」",
-            "「既然生成了，就勉強動一下吧。」"
-        ]
-    };
-
-    // 分頁切換
-    function showPage(pageId, btn) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    // 分頁切換功能 (修復版)
+    function showPage(pageId) {
+        // 先隱藏所有頁面
+        document.getElementById('diet').classList.remove('active');
+        document.getElementById('sport').classList.remove('active');
+        
+        // 移除所有按鈕 active 狀態
+        document.getElementById('btn-diet').classList.remove('active');
+        document.getElementById('btn-sport').classList.remove('active');
+        
+        // 顯示指定的頁面與按鈕
         document.getElementById(pageId).classList.add('active');
-        btn.classList.add('active');
-        // 切換到運動頁時隨機換金句
+        document.getElementById('btn-' + pageId).classList.add('active');
+        
+        // 如果是運動頁面，隨機換金句
         if(pageId === 'sport') {
-            document.getElementById('sportTalk').innerText = quotes.sport[Math.floor(Math.random()*quotes.sport.length)] + " (ಠ_ರೃ)";
+            const sQuotes = ["「汗水是脂肪的淚水，雖然很鹹。」", "「動一下吧，難道你想讓隔壁貓看笑話？」", "「這 30 分鐘是我人生最漫長的時刻。」", "「既然生成了，就勉強動一下吧。」"];
+            document.getElementById('sportTalk').innerText = sQuotes[Math.floor(Math.random()*sQuotes.length)] + " (ಠ_ರೃ)";
         }
     }
 
-    // 熱量計算主邏輯
+    // 數據同步與吐槽
+    const quotes = {
+        high: ["【AI閨蜜】胃是百寶袋？再吃要訂大碼衣了喔。", "【嚕嚕米】這肚子...沙發都要塌了喵。", "【厭世族】這份量，是在吃最後一餐嗎？"],
+        low: ["【AI閨蜜】想修仙？快去補顆蛋，別過度斷食。", "【嚕嚕米】沒力氣鏟屎了嗎？快去吃飯喵。", "【厭世族】沒吃量怎麼應付老闆？"],
+        perfect: ["【AI閨蜜】算你狠，這自律程度我服了。", "【嚕嚕米】哼，勉勉強強算合格吧，人類。", "【厭世族】達成目標了，可以下班了嗎？"]
+    };
+
     function sync() {
         const b = parseInt(document.getElementById('b_sel').value) || 0;
         const l = parseInt(document.getElementById('l_sel').value) || 0;
@@ -288,121 +189,75 @@
         const total = Math.round(b + l + d + meat + veg + carbs + extra);
         document.getElementById('totalDisplay').innerText = total;
         
-        // 吐槽邏輯
         let q = "";
         const box = document.getElementById('talkBox');
-        if(total > 1250) {
-            q = quotes.high[Math.floor(Math.random()*quotes.high.length)];
-            box.style.borderLeftColor = "var(--fast)";
-        } else if(total >= 1000) {
-            q = quotes.perfect[Math.floor(Math.random()*quotes.perfect.length)];
-            box.style.borderLeftColor = "#55efc4";
-        } else {
-            q = quotes.low[Math.floor(Math.random()*quotes.low.length)];
-            box.style.borderLeftColor = "#ffeaa7";
-        }
+        if(total > 1250) q = quotes.high[Math.floor(Math.random()*quotes.high.length)];
+        else if(total >= 1000) q = quotes.perfect[Math.floor(Math.random()*quotes.perfect.length)];
+        else q = quotes.low[Math.floor(Math.random()*quotes.low.length)];
         box.innerText = q + " (ಠ_ರೃ)";
     }
 
-    // 運動生成器 (Rumbo 動作版)
+    // 運動生成
     function generateWorkout() {
         const moves = ["Jumping Jack", "Crunch", "Cycling Crunch", "Knee Raise", "Mountain Climber", "Plank", "Push Up", "Squat", "Slow Jogging", "Superman"];
-        // 隨機排定並取前 6 個
         const shuffled = moves.sort(() => 0.5 - Math.random()).slice(0, 6);
-        
         let html = "<h3>🎲 今日隨機課表 (做 3 輪)</h3>";
         shuffled.forEach((m, i) => {
-            html += `<div class="workout-item">
-                        <span class="workout-name">${i+1}. ${m}</span>
-                        <span class="workout-time">30s</span>
-                     </div>`;
+            html += `<div class="workout-item"><span style="font-weight:600;">${i+1}. ${m}</span><span class="workout-time">30s</span></div>`;
         });
         document.getElementById('workout-list').innerHTML = html;
-        document.getElementById('sportTalk').innerText = "既然課表都生成了，就動一下吧喵。 (ಠ_ರೃ)";
+        document.getElementById('sportTalk').innerText = "既然生成了，就動一下吧喵。 (ಠ_ರೃ)";
     }
 
-    // 飲水追蹤邏輯 (V10 美化版)
+    // 飲水邏輯
     let wCount = 0;
     const waterGrid = document.getElementById('waterGrid');
     for(let i=0; i<8; i++) {
         const drop = document.createElement('span');
         drop.innerText = '💧'; 
-        // 初始樣式：灰色
-        drop.style.cssText = "font-size:1.8rem; cursor:pointer; transition: all 0.2s; filter:grayscale(1); opacity: 0.5;";
-        
+        drop.style.cssText = "font-size:1.8rem; cursor:pointer; transition: 0.2s; filter:grayscale(1); opacity: 0.5;";
         drop.onclick = function() {
-            // 切換灰色/彩色
             if(this.style.filter === 'grayscale(1)') {
-                this.style.filter = 'grayscale(0)';
-                this.style.opacity = '1';
-                this.style.transform = 'scale(1.1)';
+                this.style.filter = 'grayscale(0)'; this.style.opacity = '1'; this.style.transform = 'scale(1.1)';
             } else {
-                this.style.filter = 'grayscale(1)';
-                this.style.opacity = '0.5';
-                this.style.transform = 'scale(1)';
+                this.style.filter = 'grayscale(1)'; this.style.opacity = '0.5'; this.style.transform = 'scale(1)';
             }
-            // 計算亮起的水滴數
             wCount = Array.from(waterGrid.children).filter(c => c.style.filter === 'grayscale(0)').length;
             document.getElementById('waterText').innerText = `已喝：${wCount * 250} ml / 1900ml`;
-            
-            // 達標小彩蛋
-            if(wCount >= 8) {
-                document.getElementById('waterText').innerHTML = "🎉 今日飲水已達標！超棒！";
-            }
         };
         waterGrid.appendChild(drop);
     }
 
-    // 186 計時器邏輯
+    // 計時器
     function updateTimer() {
         const now = new Date();
-        const startE = new Date(); startE.setHours(13,0,0,0); // 13:00 開食
-        const stopE = new Date(); stopE.setHours(19,0,0,0);  // 19:00 關食
-        
+        const startE = new Date(); startE.setHours(13,0,0,0);
+        const stopE = new Date(); stopE.setHours(19,0,0,0);
         const tEl = document.getElementById('timer');
         const sEl = document.getElementById('fast-status');
         const box = document.getElementById('timerBox');
-        
         if (now >= startE && now < stopE) {
-            // 進食窗口
             tEl.innerText = formatMs(stopE - now);
-            sEl.innerText = "進食窗口開放中 🟢 (吃夠蛋白質！)";
-            box.style.background = "#00b894"; // 勝利綠
+            sEl.innerText = "進食窗口開放中 🟢"; box.style.background = "#00b894";
         } else {
-            // 斷食期
-            let target = startE;
-            if (now >= stopE) target.setDate(target.getDate()+1); // 目標設定為明天 13:00
+            let target = startE; if (now >= stopE) target.setDate(target.getDate()+1);
             tEl.innerText = formatMs(target - now);
-            sEl.innerText = "斷食燃脂中 🔴 (多喝水抗餓)";
-            box.style.background = "#d63031"; // 警告紅
+            sEl.innerText = "斷食燃脂中 🔴"; box.style.background = "#d63031";
         }
     }
-    
     function formatMs(ms) {
         const h = Math.floor(ms / 3600000).toString().padStart(2, '0');
         const m = Math.floor((ms % 3600000) / 60000).toString().padStart(2, '0');
         const s = Math.floor((ms % 60000) / 1000).toString().padStart(2, '0');
         return `${h}:${m}:${s}`;
     }
-    setInterval(updateTimer, 1000);
-    updateTimer(); // 立即執行一次
+    setInterval(updateTimer, 1000); updateTimer();
 
-    // Google 日曆同步
     function saveToCalendar() {
         const kcal = document.getElementById('totalDisplay').innerText;
-        const talk = document.getElementById('talkBox').innerText;
-        const water = document.getElementById('waterText').innerText;
-        
-        const title = `減脂日記：${kcal} kcal / ${water.split(' ')[0]}`;
-        const detail = `今日狀態：${talk}\n【150cm戰鬥機 V10.0】`;
-        
-        const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&details=${encodeURIComponent(detail)}&add=`;
-        window.open(url, '_blank');
+        window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('減脂日記：'+kcal+'k')}&add=`, '_blank');
     }
-
-    // 初始執行一次熱量計算，帶出預設吐槽
     sync();
 </script>
-
 </body>
 </html>
