@@ -3,219 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>150cm 減脂戰鬥機 v8.0</title>
+    <title>150cm 減脂戰鬥機 v9.0</title>
     <style>
-        :root { --primary: #6c5ce7; --accent: #a29bfe; --bg: #f0f2f5; --water: #0984e3; --fast: #d63031; --sport: #ff7675; }
-        body { font-family: -apple-system, system-ui, BlinkMacSystemFont; background: var(--bg); padding: 10px; display: flex; justify-content: center; }
-        .container { background: white; width: 100%; max-width: 450px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 20px; box-sizing: border-box; min-height: 90vh; }
+        :root { --primary: #6c5ce7; --accent: #a29bfe; --bg: #f5f6fa; --water: #0984e3; --fast: #d63031; --sport: #e17055; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); padding: 10px; display: flex; justify-content: center; }
+        .container { background: white; width: 100%; max-width: 450px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 20px; box-sizing: border-box; }
         
-        /* 分頁標籤樣式 */
-        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tab-btn { flex: 1; padding: 12px; border: none; border-radius: 12px; background: #eee; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        /* Tab Navigation */
+        .tabs { display: flex; gap: 8px; margin-bottom: 15px; }
+        .tab-btn { flex: 1; padding: 12px; border: none; border-radius: 12px; background: #eee; font-weight: bold; cursor: pointer; }
         .tab-btn.active { background: var(--primary); color: white; }
         .page { display: none; }
         .page.active { display: block; }
 
-        /* 通用卡片 */
-        .card { background: #fff; border: 1px solid #eee; border-radius: 16px; padding: 15px; margin-bottom: 15px; }
-        h3 { margin: 0 0 10px 0; font-size: 1rem; color: #444; border-left: 4px solid var(--primary); padding-left: 8px; }
+        /* Status Boxes */
+        .status-card { padding: 15px; border-radius: 18px; text-align: center; margin-bottom: 15px; color: white; }
+        .timer-box { background: var(--fast); }
+        .stats-box { background: var(--primary); }
+        .talk-bubble { background: #f1f2f6; color: #2f3542; padding: 12px; border-radius: 12px; font-size: 0.9rem; margin-bottom: 15px; border-left: 5px solid var(--accent); position: relative; }
         
-        /* 飲食分頁樣式 */
-        .timer-box { background: var(--fast); color: white; padding: 15px; border-radius: 15px; text-align: center; margin-bottom: 15px; }
-        .water-box { background: #e1f5fe; border: 1px solid var(--water); padding: 15px; border-radius: 15px; text-align: center; margin-bottom: 15px; }
-        .water-grid { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-        .water-drop { font-size: 1.5rem; cursor: pointer; filter: grayscale(1); }
-        .water-drop.active { filter: grayscale(0); }
-        .stats-box { background: var(--primary); color: white; padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 15px; }
-        select, input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box; }
+        /* Forms */
+        .card { background: #fff; border: 1px solid #f1f2f6; border-radius: 15px; padding: 15px; margin-bottom: 12px; }
+        h3 { margin: 0 0 10px 0; font-size: 0.95rem; color: #57606f; }
+        select, input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 8px; box-sizing: border-box; font-size: 1rem; }
+        .fist-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 5px; }
         
-        /* 運動分頁樣式 */
-        .sport-hero { background: var(--sport); color: white; padding: 20px; border-radius: 20px; text-align: center; margin-bottom: 15px; }
-        .workout-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
-        .workout-name { font-weight: bold; color: #2d3436; }
-        .workout-time { color: var(--sport); font-weight: 800; }
-
-        button { padding: 12px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; width: 100%; }
-        .btn-main { background: #1976d2; color: white; margin-top: 10px; }
-        .btn-gen { background: var(--sport); color: white; margin-bottom: 15px; }
-        .ng-hint { font-size: 0.7rem; color: #999; text-align: center; margin-top: 15px; }
+        /* Workout */
+        .workout-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dotted #ccc; }
+        button { padding: 14px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; width: 100%; }
+        .btn-main { background: var(--primary); color: white; margin-top: 10px; }
+        .btn-gen { background: var(--sport); color: white; margin-bottom: 10px; }
+        .ng-hint { font-size: 0.75rem; color: #a4b0be; text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="tabs">
-        <button class="tab-btn active" onclick="showPage('diet-page', this)">🍱 飲食紀錄</button>
-        <button class="tab-btn" onclick="showPage('sport-page', this)">🏃 運動計畫</button>
+        <button class="tab-btn active" onclick="showPage('diet', this)">🍱 飲食</button>
+        <button class="tab-btn" onclick="showPage('sport', this)">🏃 運動</button>
     </div>
 
-    <div id="diet-page" class="page active">
-        <div class="timer-box">
-            <div style="font-size: 0.8rem; opacity: 0.9;">186 斷食倒數 (13:00 開食)</div>
-            <div id="timer" style="font-size: 1.8rem; font-weight: bold;">--:--:--</div>
-            <div id="fast-status" style="font-size: 0.8rem;">狀態讀取中...</div>
+    <div id="diet" class="page active">
+        <div id="talkBox" class="talk-bubble">讀取對話中... (ಠ_ರೃ)</div>
+        
+        <div class="status-card timer-box" id="timerBox">
+            <div id="timer">--:--:--</div>
+            <div id="fast-status" style="font-size: 0.8rem;">186 斷食中</div>
         </div>
 
-        <div class="water-box">
-            <div style="color: var(--water); font-weight: bold;">💧 飲水 (目標 1900ml)</div>
-            <div class="water-grid" id="waterGrid"></div>
-            <div id="waterText" style="font-size: 0.8rem; margin-top: 5px;">已喝：0 ml</div>
-        </div>
-
-        <div class="stats-box">
-            <div style="font-size: 0.9rem;">今日累積攝取</div>
-            <div id="totalDisplay" style="font-size: 2.5rem; font-weight: 800;">0</div>
-            <div id="statusText">目標：1100 - 1200 kcal</div>
+        <div class="status-card stats-box">
+            <div style="font-size: 2.2rem; font-weight: 800;" id="totalDisplay">0</div>
+            <div style="font-size: 0.8rem;">今日攝取 (1100-1200 kcal)</div>
         </div>
 
         <div class="card">
-            <h3>建議餐點</h3>
+            <h3>🌅 第一餐 (12:00)</h3>
             <select id="b_sel" onchange="sync()">
-                <option value="0">--- 第一餐建議 (12:00) ---</option>
+                <option value="0">--- 推薦選項 ---</option>
                 <option value="180">能量果凍 (180k)</option>
                 <option value="155">茶葉蛋2顆+黑咖啡 (155k)</option>
                 <option value="210">鮪魚飯糰 (210k)</option>
-                <option value="280">起司蛋吐司 (280k)</option>
-            </select>
-            <select id="l_sel" onchange="sync()">
-                <option value="0">--- 主餐建議 (中/晚) ---</option>
-                <option value="350">去骨雞腿排沙拉 (350k)</option>
-                <option value="450">自助餐(1肉2菜半飯) (450k)</option>
-                <option value="400">滷味(青菜/蛋白/科學麵) (400k)</option>
+                <option value="280">起司蛋吐司-去邊 (280k)</option>
             </select>
         </div>
 
         <div class="card">
-            <h3>手動/份量輸入</h3>
-            <input type="number" id="f_meat" placeholder="肉類拳頭數" step="0.5" oninput="sync()">
-            <input type="number" id="extra_kcal" placeholder="其他點心/熱量" oninput="sync()">
+            <h3>🍱 主餐 (午/晚)</h3>
+            <select id="l_sel" onchange="sync()">
+                <option value="0">--- 中午選這 ---</option>
+                <option value="350">去骨雞腿排沙拉 (350k)</option>
+                <option value="420">超商蕎麥涼麵 (420k)</option>
+                <option value="400">滷味(青菜/蛋白/科學麵) (400k)</option>
+            </select>
+            <select id="d_sel" onchange="sync()">
+                <option value="0">--- 晚上選這 ---</option>
+                <option value="150">舒肥雞胸肉 (150k)</option>
+                <option value="380">火鍋(瘦肉/大量菜) (380k)</option>
+                <option value="300">關東煮(蘿蔔/豆腐/肉) (300k)</option>
+            </select>
         </div>
-        <button class="btn-main" onclick="saveToCalendar()">💾 儲存飲食至日曆</button>
+
+        <div class="card">
+            <h3>🖐️ 自助餐/手動份量</h3>
+            <div class="fist-row">
+                <input type="number" id="f_meat" placeholder="肉拳頭" oninput="sync()">
+                <input type="number" id="f_veg" placeholder="菜拳頭" oninput="sync()">
+            </div>
+            <div class="fist-row">
+                <input type="number" id="f_carbs" placeholder="澱粉拳" oninput="sync()">
+                <input type="number" id="extra_kcal" placeholder="其他熱量" oninput="sync()">
+            </div>
+        </div>
+        <button class="btn-main" onclick="saveToCalendar()">💾 儲存今日紀錄</button>
     </div>
 
-    <div id="sport-page" class="page">
-        <div class="sport-hero">
-            <div style="font-size: 0.9rem;">今日運動目標</div>
-            <div style="font-size: 2rem; font-weight: 800;">30 分鐘訓練</div>
-            <div id="workout-date" style="font-size: 0.8rem; opacity: 0.9;">按下方按鈕生成隨機課表</div>
-        </div>
-
-        <button class="btn-gen" onclick="generateWorkout()">🎲 生成今日 Rumbo 隨機課表</button>
-
+    <div id="sport" class="page">
+        <div id="sportTalk" class="talk-bubble">不想動嗎？我也是。</div>
+        <button class="btn-gen" onclick="generateWorkout()">🎲 生成 Rumbo 隨機課表</button>
         <div class="card" id="workout-list">
-            <div style="text-align:center; color:#ccc; padding:20px;">點擊上方按鈕組合動作</div>
+            <div style="text-align:center; color:#ccc; padding:20px;">生成課表後重複做 3 輪</div>
         </div>
-
-        <div class="card" style="background: #fff8f8;">
-            <h3>💡 訓練提示</h3>
-            <p style="font-size: 0.8rem; color: #666; line-height: 1.5;">
-                每個動作執行 <b>30-45 秒</b>，休息 <b>15 秒</b>。<br>
-                整套重複 <b>3 輪</b> 即可達成 30 分鐘目標。<br>
-                如果有骨頭不適或太累，可按按鈕重抽。
-            </p>
+        <div class="card">
+            <h3>💧 喝水 (1900ml 目標)</h3>
+            <div style="display:flex; justify-content:center; gap:5px; flex-wrap:wrap;" id="waterGrid"></div>
+            <div id="waterText" style="text-align:center; font-size:0.8rem; margin-top:5px;">已喝：0 ml</div>
         </div>
     </div>
 
-    <div class="ng-hint">🚫 絕對不碰：胡蘿蔔、洋蔥、小黃瓜、番茄、苦瓜、有骨肉</div>
+    <div class="ng-hint">🚫 不吃：胡蘿蔔、洋蔥、小黃瓜、番茄、苦瓜、有骨肉</div>
 </div>
 
 <script>
-    // 分頁切換
+    const quotes = {
+        high: [
+            "【AI閨蜜】胃是百寶袋？再吃要訂大碼衣了喔。",
+            "【嚕嚕米】這肚子...沙發都要塌了喵。",
+            "【厭世族】這份量，是在吃最後一餐嗎？"
+        ],
+        low: [
+            "【AI閨蜜】想修仙？快去補顆蛋，別暈倒。",
+            "【嚕嚕米】沒力氣鏟屎了嗎？快去吃飯喵。",
+            "【厭世族】沒吃飽怎麼有體力應付老闆？"
+        ],
+        perfect: [
+            "【AI閨蜜】算你狠，這自律程度我服了。",
+            "【嚕嚕米】哼，勉強合格吧，人類。",
+            "【厭世族】達成目標了，可以下班了嗎？"
+        ],
+        sport: [
+            "「汗水是脂肪的淚水，雖然很鹹。」",
+            "「動一下吧，難道你想讓隔壁貓看笑話？」",
+            "「這 30 分鐘是我人生最漫長的時刻。」",
+            "「運動是為了活著吃更多美食。」",
+            "「每天都一樣很煩？所以今天隨機抽。」"
+        ]
+    };
+
     function showPage(pageId, btn) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
         btn.classList.add('active');
+        if(pageId === 'sport') document.getElementById('sportTalk').innerText = quotes.sport[Math.floor(Math.random()*quotes.sport.length)];
     }
 
-    // 運動生成器
-    const rumboPool = [
-        {name: "Jumping Jack", time: "30s", focus: "燃脂"},
-        {name: "Slow Jogging", time: "30s", focus: "熱身"},
-        {name: "Squat", time: "30s", focus: "下肢"},
-        {name: "Plank", time: "30s", focus: "核心"},
-        {name: "Crunch", time: "30s", focus: "腹部"},
-        {name: "Push Up", time: "30s", focus: "上肢"},
-        {name: "Superman", time: "30s", focus: "背部"},
-        {name: "Mountain Climber", time: "30s", focus: "高強"},
-        {name: "Knee Raise", time: "30s", focus: "下腹"},
-        {name: "Cycling Crunch", time: "30s", focus: "側腹"}
-    ];
+    function sync() {
+        const b = parseInt(document.getElementById('b_sel').value) || 0;
+        const l = parseInt(document.getElementById('l_sel').value) || 0;
+        const d = parseInt(document.getElementById('d_sel').value) || 0;
+        const meat = (parseFloat(document.getElementById('f_meat').value) || 0) * 200;
+        const veg = (parseFloat(document.getElementById('f_veg').value) || 0) * 35;
+        const carbs = (parseFloat(document.getElementById('f_carbs').value) || 0) * 280;
+        const extra = parseInt(document.getElementById('extra_kcal').value) || 0;
+        
+        const total = Math.round(b + l + d + meat + veg + carbs + extra);
+        document.getElementById('totalDisplay').innerText = total;
+        
+        let q = "";
+        if(total > 1250) q = quotes.high[Math.floor(Math.random()*quotes.high.length)];
+        else if(total >= 1000) q = quotes.perfect[Math.floor(Math.random()*quotes.perfect.length)];
+        else q = quotes.low[Math.floor(Math.random()*quotes.low.length)];
+        document.getElementById('talkBox').innerText = q;
+    }
 
     function generateWorkout() {
-        // 隨機選 6 個動作
-        const shuffled = [...rumboPool].sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 6);
-        
-        let html = "<h3>今日隨機菜單 (做 3 輪)</h3>";
-        selected.forEach((item, index) => {
-            html += `<div class="workout-item">
-                        <span>${index+1}. <span class="workout-name">${item.name}</span> <small>(${item.focus})</small></span>
-                        <span class="workout-time">${item.time}</span>
-                     </div>`;
-        });
-        html += `<div class="workout-item" style="border:none;"><span>休息 Rest</span><span class="workout-time">15s</span></div>`;
-        
+        const moves = ["Jumping Jack", "Crunch", "Cycling Crunch", "Knee Raise", "Mountain Climber", "Plank", "Push Up", "Squat", "Slow Jogging", "Superman"];
+        const shuffled = moves.sort(() => 0.5 - Math.random()).slice(0, 6);
+        let html = "<h3>今日隨機菜單 (30s/組)</h3>";
+        shuffled.forEach((m, i) => html += `<div class="workout-item"><span>${i+1}. ${m}</span><span>30s</span></div>`);
         document.getElementById('workout-list').innerHTML = html;
-        document.getElementById('workout-date').innerText = "已生成最新課表！";
+        document.getElementById('sportTalk').innerText = "既然生成了，就勉強動一下吧。";
     }
 
-    // --- 以下為飲食原功能 ---
-    let waterCount = 0;
-    const waterGrid = document.getElementById('waterGrid');
+    // 飲水與計時器邏輯
+    let wCount = 0;
     for(let i=0; i<8; i++) {
         const drop = document.createElement('span');
-        drop.innerText = '💧'; drop.className = 'water-drop';
+        drop.innerText = '💧'; drop.style.cssText = "font-size:1.5rem; cursor:pointer; filter:grayscale(1);";
         drop.onclick = function() {
-            this.classList.toggle('active');
-            waterCount = document.querySelectorAll('.water-drop.active').length;
-            document.getElementById('waterText').innerText = `已喝：${waterCount * 250} ml`;
+            this.style.filter = this.style.filter === 'grayscale(0)' ? 'grayscale(1)' : 'grayscale(0)';
+            wCount = Array.from(document.getElementById('waterGrid').children).filter(c => c.style.filter === 'grayscale(0)').length;
+            document.getElementById('waterText').innerText = `已喝：${wCount * 250} ml`;
         };
-        waterGrid.appendChild(drop);
+        document.getElementById('waterGrid').appendChild(drop);
     }
 
     function updateTimer() {
         const now = new Date();
         const start = new Date(); start.setHours(13,0,0,0);
         const stop = new Date(); stop.setHours(19,0,0,0);
-        const timerEl = document.getElementById('timer');
-        const statusEl = document.getElementById('fast-status');
-        const box = document.querySelector('.timer-box');
-
+        const tEl = document.getElementById('timer');
+        const sEl = document.getElementById('fast-status');
+        const box = document.getElementById('timerBox');
         if (now >= start && now < stop) {
-            const diff = stop - now;
-            timerEl.innerText = formatDiff(diff);
-            statusEl.innerText = "進食中 🟢"; box.style.background = "#00b894";
+            tEl.innerText = format(stop - now); sEl.innerText = "進食視窗 🟢"; box.style.background = "#00b894";
         } else {
             let target = start; if (now >= stop) target.setDate(target.getDate()+1);
-            const diff = target - now;
-            timerEl.innerText = formatDiff(diff);
-            statusEl.innerText = "斷食中 🔴"; box.style.background = "#d63031";
+            tEl.innerText = format(target - now); sEl.innerText = "斷食燃脂中 🔴"; box.style.background = "#d63031";
         }
     }
-    function formatDiff(ms) {
+    function format(ms) {
         const h = Math.floor(ms/3600000).toString().padStart(2,'0');
         const m = Math.floor((ms%3600000)/60000).toString().padStart(2,'0');
         const s = Math.floor((ms%60000)/1000).toString().padStart(2,'0');
         return `${h}:${m}:${s}`;
     }
-    setInterval(updateTimer, 1000);
-
-    function sync() {
-        const b = parseInt(document.getElementById('b_sel').value) || 0;
-        const l = parseInt(document.getElementById('l_sel').value) || 0;
-        const meat = (parseFloat(document.getElementById('f_meat').value) || 0) * 200;
-        const extra = parseInt(document.getElementById('extra_kcal').value) || 0;
-        const total = Math.round(b + l + meat + extra);
-        document.getElementById('totalDisplay').innerText = total;
-    }
+    setInterval(updateTimer, 1000); updateTimer();
 
     function saveToCalendar() {
-        const kcal = document.getElementById('totalDisplay').innerText;
-        window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('減脂：'+kcal+'k')}&add=`, '_blank');
+        const k = document.getElementById('totalDisplay').innerText;
+        window.open(`https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('減脂：'+k+'k')}&add=`, '_blank');
     }
-    
-    updateTimer();
 </script>
 </body>
 </html>
